@@ -1,0 +1,43 @@
+.list-install-prompt {
+    font: 1.1rem "DanaNum";
+    text-align: right;
+    margin: 0;
+    padding: 0;
+}
+.list-install-prompt li {
+    margin: 5px 0;
+    font: 1rem "DanaNum";
+}
+.icon-add-to-home {
+    display: inline-block;
+    position: relative;
+    width: 40px;
+    height: 20px;
+}
+.icon-add-to-home .bi.bi-display {
+    font-size: 1.9rem;
+    position: relative;
+}
+.icon-add-to-home .bi.bi-display .bi.bi-arrow-down-short {
+    position: absolute;
+    font-size: 1.3rem;
+    background: #fff;
+    width: 17px;
+    height: 18px;
+    text-align: center;
+    line-height: 1rem;
+    z-index: 2;
+    top: -1px;
+    right: -5px;
+}
+.not-now {
+    font: 0.8rem "DanaLight" !important;
+    color: #6c6c6c;
+    padding: 0;
+}
+.en-helper {
+    font-size: 0.8rem;
+}
+.btn-install-app {
+    font-family: "DanaLight" !important;
+}
