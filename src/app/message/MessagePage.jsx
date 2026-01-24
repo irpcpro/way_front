@@ -1,6 +1,6 @@
 import "./MessagePage.css"
 import {useNavigate, useParams} from "react-router-dom";
-import React, {useEffect, useLayoutEffect, useRef, useState} from "react";
+import React, {useCallback, useEffect, useLayoutEffect, useRef, useState} from "react";
 import GetMessageDetailsApi from "../../api/GetMessageDetailsApi.jsx";
 import toast from "react-hot-toast";
 import {LayoutHeaderContext} from "../app-layout/LayoutHeader.jsx";
@@ -11,12 +11,11 @@ import {SMessageName} from "./MessageSkeletons.jsx";
 import ChatInput from "./ChatInput.jsx";
 import SpinnerLoading from "../components/Spinner.jsx";
 import MessageContext from "./MessageContext.jsx";
-import {useWebSocketContext} from "../Websocket/WebSocketProvider.jsx";
 import SendMessageApi from "../../api/SendMessageApi.jsx";
 import {config} from "../../config/globalConfig.jsx";
+import { subscribeMessageHooks } from "../websocket/subscribeChats.jsx";
 
-
-function MessagePage() {
+function MessagePage(callback, deps) {
     const MessageID = useParams().id;
     const navigate = useNavigate();
     const [page, setPage] = useState(1);
@@ -30,29 +29,6 @@ function MessagePage() {
     const prevScrollTopRef = useRef(0);
 
     const [seeImageAttachment, setSeeImageAttachment] = useState(null);
-
-    const { lastMessage } = useWebSocketContext();
-    // const [messages, setMessages] = useState([]);
-    // const [loading, setLoading] = useState(true);
-    useEffect(() => {
-        if (lastMessage && lastMessage.event === 'new_message') {
-            console.log('New message from WebSocket 11:', lastMessage.data);
-
-            // // اضافه کردن پیام جدید به لیست
-            // // ممکن است نیاز باشد بررسی کنید که پیام تکراری نباشد
-            // setMessages(prev => {
-            //     // بررسی تکراری نبودن پیام
-            //     const isDuplicate = prev.some(item =>
-            //         item.message?.id_message === lastMessage.data?.message?.id_message
-            //     );
-            //
-            //     if (!isDuplicate) {
-            //         return [lastMessage.data, ...prev];
-            //     }
-            //     return prev;
-            // });
-        }
-    }, [lastMessage]);
 
 
     const loadMoreMessages = () => {
@@ -139,6 +115,34 @@ function MessagePage() {
             toast.error(error.message)
         })
     }
+
+    const DoSub = useCallback(() =>{
+        if (!MessageID) return;
+
+        subscribeMessageHooks([Number(MessageID)], (newMsg) => {
+            console.log("✅ [WS] new message in MessagePage:", newMsg);
+
+            setMessageDetails(prev => {
+                if (!prev) return prev;
+
+                return {
+                    ...prev,
+                    chats: [...prev.chats, newMsg]
+                };
+            });
+
+            if (listTextsRef.current) {
+                listTextsRef.current.scrollTo({
+                    top: listTextsRef.current.scrollHeight,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    })
+
+    useEffect(() => {
+        DoSub()
+    }, [MessageID]);
 
     return (
         <LayoutMainContext>

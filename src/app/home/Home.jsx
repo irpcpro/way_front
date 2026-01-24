@@ -10,7 +10,7 @@ import {useCallback, useEffect, useState} from "react";
 import GetListMessagesApi from "../../api/GetListMessagesApi.jsx";
 import toast from "react-hot-toast";
 import HomeListMessages from "./HomeListMessages.jsx";
-import ChatSubscriptionManager from "../Websocket/ChatSubscriptionManager.jsx";
+import { subscribeMessageHooks } from "../websocket/subscribeChats.jsx";
 
 function Home() {
 
@@ -19,7 +19,6 @@ function Home() {
 
     const getMessages = () => {
         GetListMessagesApi.getListMessages().then((response) => {
-            console.log('response', response)
             setListMessages(response.data)
         }).catch((error) => {
             toast.error(error.message)
@@ -31,6 +30,30 @@ function Home() {
     useEffect(() => {
         getMessages();
     }, []);
+
+    useEffect(() => {
+        if (!listMessages.length) return;
+
+        const hooks = listMessages.map(item => item.message.id_message_hook);
+
+        subscribeMessageHooks(hooks, (newMsg) => {
+            console.log("[WS] new message in Home:", newMsg);
+
+            setListMessages(prevList => {
+                const exists = prevList.some(
+                    item => item.message.id_message_hook === newMsg.id_message_hook
+                );
+
+                if (!exists) {
+                    return [...prevList, { message: newMsg, user: newMsg.user }];
+                }
+
+                return prevList;
+            });
+        });
+    }, [listMessages]);
+
+
 
     const SkeletonLoading = () => (
         <>
@@ -47,14 +70,11 @@ function Home() {
                 <HeaderLogo />
             </LayoutHeaderContext>
             <LayoutContentContext>
-                <ChatSubscriptionManager
-                    messages={listMessages}
-                />
                 {
                     !listMessagesLoading ? (
                         listMessages.length?(
                             listMessages.map((item) => (
-                                <HomeListMessages item={item} />
+                                <HomeListMessages key={item.message.id_message} item={item} />
                             ))
                         ):(
                             <>
