@@ -1,0 +1,53 @@
+.s-chat-item {
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    animation: skeleton 1.5s infinite linear;
+}
+.s-chat-item .s-avatar {
+    background: #eeeeff;
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    flex: 1 0 auto;
+}
+.s-chat-item .s-right {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    padding: 8px 0 8px 10px;
+    gap: 7px;
+}
+.s-chat-item .s-top {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    gap: 10px;
+    height: 50%;
+}
+.s-chat-item .s-name {
+    background: #eeeeff;
+    width: 50px;
+    height: 100%;
+    border-radius: 7px;
+}
+.s-chat-item .s-date {
+    background: #eeeeff;
+    width: 50px;
+    height: 100%;
+    border-radius: 7px;
+}
+.s-chat-item .s-bottom {
+    display: flex;
+    justify-content: start;
+    flex-direction: row;
+    height: 50%;
+}
+.s-chat-item .s-chat {
+    background: #eeeeff;
+    width: 70%;
+    height: 100%;
+    border-radius: 7px;
+}

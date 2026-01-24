@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="268" height="111" viewBox="0 0 268 111">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_2" data-name="Rectangle 2" width="268" height="111" fill="#fff"/>
+    </clipPath>
+  </defs>
+  <g id="Web_1920_1" data-name="Web 1920 – 1" clip-path="url(#clip-path)">
+    <g id="Web_1920_1-2" data-name="Web 1920 – 1">
+      <g id="Group_1" data-name="Group 1" transform="translate(-798.506 -359.585)">
+        <path id="Path_4" data-name="Path 4" d="M822.782,368.163h35.942l7.933-58.446,8.581,58.446H911.18l12.628-110.579H895.961l-7.771,78.36-6.152-78.36H851.6l-7.933,78.36-5.828-78.36H809.506Z" transform="translate(-11 102)" fill="#fff"/>
+        <path id="Subtraction_1" data-name="Subtraction 1" d="M72.856,110.9h-29.3L41.771,90.5H32.218l-1.943,20.4H0L14.733,0H56.666ZM36.75,24.933h0l-5.5,46.951H41.609L36.751,24.933Z" transform="translate(919.932 359.747)" fill="#fff"/>
+        <path id="Path_10" data-name="Path 10" d="M1029.37,368.649h26.066V328.336l21.209-70.589h-26.714l-7.771,43.228-7.448-43.228h-26.39l21.047,70.589Z" transform="translate(-11 102)" fill="#fff"/>
+      </g>
+    </g>
+  </g>
+</svg>

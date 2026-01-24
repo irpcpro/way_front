@@ -55,14 +55,11 @@ export default defineConfig({
   ],
 
   optimizeDeps: {
-    include: ["d3", "d3-cloud"],
+    //include: ["d3", "d3-cloud"],
   },
 
   server: {
     host: "0.0.0.0",
-    port: 5000,
-    allowedHosts: [
-      'ticket-test.tosantechno.net'
-    ]
+    port: 5000
   }
 })

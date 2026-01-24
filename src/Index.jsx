@@ -12,6 +12,27 @@ import {config} from "./config/globalConfig";
 import React, {useEffect} from "react";
 import InstallAppPrompt from "./app/login/InstallAppPrompt.jsx";
 import './i18n';
+import MessagePage from "./app/message/MessagePage.jsx";
+import {WebSocketProvider} from "./app/Websocket/WebSocketProvider.jsx";
+
+const WebSocketWrapper = ({ children }) => {
+    const getWebSocketUrl = () => {
+        const baseUrl = config.websocket.url_app + config.websocket.app_key;
+        return `${baseUrl}?protocol=7&client=js&version=7.0.6&flash=false`;
+    };
+
+    return (
+        <WebSocketProvider
+            url={getWebSocketUrl()}
+            appKey={config.websocket.app_key}
+            token={"way_app_key:22db383126aed83923978f8015c3639769df2cfb42b7a5b8745453596fafb3f1"}
+            translationKey={"NotificationFeature.NotificationFeatureSocket"}
+            clientId={config.websocket.app_id}
+        >
+            {children}
+        </WebSocketProvider>
+    );
+};
 
 function Index() {
     return (
@@ -20,9 +41,13 @@ function Index() {
             <Routes>
                 <Route path={config.routes.login} element={<LoginPage />} />
 
-                <Route element={<PrivateRoute />}>
+                <Route element={(
+                    <WebSocketWrapper>
+                        <PrivateRoute />
+                    </WebSocketWrapper>
+                )}>
                     <Route path={config.routes.home} element={<Home />} />
-
+                    <Route path={`${config.routes.message}/:id`} element={<MessagePage />} />
                 </Route>
 
                 <Route path="*" element={<NotFound />} />

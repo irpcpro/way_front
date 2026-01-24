@@ -21,6 +21,8 @@ function LoginPage() {
     const [inlineError, setInlineError] = useState('');
     const [timer, setTimer] = useState(0);
 
+    const [loginLoading, setLoginLoading] = useState(true);
+
     useEffect(() => {
         if (timer <= 0) return;
         const interval = setInterval(() => {
@@ -43,8 +45,8 @@ function LoginPage() {
     const handleSendCode = async () => {
         if (loading) return;
         if (phone.length !== config.phone_len || !phone.startsWith(config.phone_start_with)) {
-            toast.error('شماره موبایل نامعتبر است');
-            showInlineError(`شماره باید ${config.phone_len} رقم و با ${config.phone_start_with} شروع شود`);
+            toast.error('phone number is invalid');
+            showInlineError(`length of phonenumber should be ${config.phone_len} and start with ${config.phone_start_with} number`);
             return;
         }
 
@@ -55,8 +57,8 @@ function LoginPage() {
             setTimer(res.data.expires_in);
             setTimeout(() => otpInputsRef.current[0]?.focus(), 300);
         }).catch((err) => {
-            toast.error('خطای ارتباط با سرور 51')
-            showInlineError('خطای در ارسال کد 52');
+            toast.error('Server error')
+            showInlineError('Error on Sending code');
         }).finally(() => {
             setLoading(false);
         });
@@ -66,19 +68,19 @@ function LoginPage() {
         if (loading) return;
         const otpValue = otp.join('');
         if (otpValue.length !== config.otp_len) {
-            toast.error(`لطفاً کد ${config.otp_len} رقمی را کامل وارد کنید`);
+            toast.error(`Please Enter the code [${config.otp_len} length]`);
             return;
         }
 
         setLoading(true);
         const res = await authApi.verifyOtp(phone, otpValue).then((res) => {
-            const {access_token, user} = res.data;
+            const {token, user} = res.data;
             // set token to local storage
-            toast.success('ورود موفقیت‌آمیز بود!');
-            login(access_token, user);
+            toast.success('You are logged in');
+            login(token, user);
             navigate('/');
         }).catch((err) => {
-            const msg = err.message || 'کد تأیید اشتباه است';
+            const msg = err.message || 'wrong OTP code';
             toast.error(msg);
             showInlineError(msg);
             setTimeout(() => otpInputsRef.current[config.otp_len-1]?.focus(), 100);
@@ -139,8 +141,8 @@ function LoginPage() {
             handleSendCode();
         }
         if (phone.length === config.phone_len && !phone.startsWith(config.phone_start_with)) {
-            toast.error(`شماره باید ${config.phone_len} رقم و با ${config.phone_start_with} شروع شود`);
-            showInlineError(`شماره باید ${config.phone_len} رقم و با ${config.phone_start_with} شروع شود`);
+            toast.error(`length of phonenumber should be ${config.phone_len} and start with ${config.phone_start_with} number`);
+            showInlineError(`length of phonenumber should be ${config.phone_len} and start with ${config.phone_start_with} number`);
         }
     }, [phone]);
 
@@ -162,25 +164,43 @@ function LoginPage() {
         }).catch(() => {});
     }, [step]);
 
-    return (
-        <div className="min-vh-100 bg-primary bg-gradient d-flex align-items-center justify-content-center p-2">
-            <div className="bg-white rounded-4 shadow-lg bg-white-box p-5" style={{maxWidth: '480px', width: '100%'}}>
-                <div className="text-center mb-5">
-                    <h3 className="fw-bold text-dark">ورود به نمایشگاه</h3>
-                    <p className="text-muted">شماره موبایل خود را وارد کنید</p>
-                </div>
+    useEffect(() => {
+        setTimeout(()=>{
+            setLoginLoading(false);
+        },900)
+    }, []);
 
+    return (
+        <div className="bg-box-login min-vh-100 bg-login-color bg-gradient d-flex align-items-center justify-content-center p-2">
+            {loginLoading && (
+                <div className="login-loading">
+                    <div className="img-way">
+                        <div className="img">
+                            <img src="../../../public/assets/images/where-are-you.svg" alt=""/>
+                            <div className="progressbar"><div className="bar"></div></div>
+                        </div>
+                    </div>
+                </div>
+            )}
+            <div className="copyright">All rights reserved | Copyright © 2026</div>
+            <div className="bg-login-logo">
+                <div className="login-logo"></div>
+                <div className="login-logo-text"></div>
+            </div>
+            <div className="bg-white rounded-4 shadow-lg bg-white-box p-2" style={{maxWidth: '480px', width: '100%'}}>
+                <div className="text-center pt-3">
+                    <p className="text-muted">Enter your phone to send OTP via SMS</p>
+                </div>
                 {step === 1 ? (
                     <div>
-                        <div className="mb-4">
-                            <label className="form-label fw-semibold">شماره موبایل</label>
+                        <div className="mb-3">
                             <div className="input-group dir-left">
                                 <input
                                     ref={phoneInputRef}
                                     type="text"
                                     inputMode="numeric"
                                     pattern="[0-9]*"
-                                    className="form-control text-center login-phonenumber font-num"
+                                    className="text-center login-phonenumber font-num"
                                     placeholder={`${config.phone_start_with}xxxxxxxxx`}
                                     value={phone}
                                     onChange={handlePhoneChange}
@@ -195,7 +215,7 @@ function LoginPage() {
                                 />
                             </div>
                             {inlineError && (
-                                <div className="text-danger mt-2 fw-bold" style={{fontSize: '14px'}}>
+                                <div className="text-danger text-alert mt-2 fw-bold" style={{fontSize: '14px'}}>
                                     {inlineError}
                                 </div>
                             )}
@@ -204,22 +224,22 @@ function LoginPage() {
                         <button
                             onClick={handleSendCode}
                             disabled={!isPhoneValid || loading}
-                            className={`btn w-100 py-3 fw-bold ${(isPhoneValid && !loading) ? 'btn-primary' : 'btn-secondary'}`}
+                            className={`btn-send-login w-100 py-3 fw-bold ${(!isPhoneValid || loading) && 'btn-disabled'}`}
                         >
-                            {loading ? 'در حال ارسال...' : 'ارسال کد تأیید'}
+                            {loading ? 'Sending...' : 'Send Code'}
                         </button>
                     </div>
                 ) : (
                     <div>
                     <div className="text-center mb-4">
                             <p className="text-muted mb-1">
-                                کد تأیید به شماره زیر ارسال شد:
+                                OTP code was sent to:
                             </p>
                             <div>
                                 <strong dir="ltr" className="font-num text-primary dir-left">{phone}</strong>
                             </div>
                             <button onClick={editPhone} className="btn btn-link text-decoration-underline p-0 ms-2">
-                                ویرایش شماره
+                                Edit PhoneNumber
                             </button>
                         </div>
 
@@ -255,7 +275,7 @@ function LoginPage() {
                         <div className="text-center mb-3">
                             {timer > 0 ? (
                                 <span className="text-muted">
-                                    ارسال مجدد تا <strong className="font-num mx-2 text-primary">{timer}</strong> ثانیه
+                                    Send again untill <strong className="font-num mx-2 text-primary">{timer}</strong> seconds.
                                 </span>
                             ) : (
                                 <button
@@ -263,7 +283,7 @@ function LoginPage() {
                                     onClick={handleSendCode}
                                     disabled={loading}
                                 >
-                                    ارسال دوباره کد
+                                    Send again
                                 </button>
                             )}
                         </div>
@@ -279,7 +299,7 @@ function LoginPage() {
                             disabled={!isOtpComplete || loading}
                             className={`btn w-100 py-3 fw-bold ${isOtpComplete && !loading ? 'btn-success' : 'btn-secondary'}`}
                         >
-                            {loading ? 'در حال ورود...' : 'ورود به پنل'}
+                            {loading ? 'Logging in...' : 'Login'}
                         </button>
                     </div>
                 )}

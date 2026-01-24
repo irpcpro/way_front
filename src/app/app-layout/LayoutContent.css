@@ -1,0 +1,12 @@
+#main-wrapper #main-content {
+    flex: 1 0 auto;
+    /*padding-bottom: 56px;*/
+    padding-bottom: 5px;
+    overflow: hidden;
+    /*height: calc(100vh - 50px);*/
+    height: 50vh;
+}
+#main-content .wrap {
+    overflow: hidden;
+    height: 100%;
+}

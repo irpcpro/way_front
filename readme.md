@@ -19,3 +19,8 @@ docker run -d -p 80:80 --name exhibition-app --restart unless-stopped exhibition
 # down docker
 docker stop exhibition-app
 
+
+versions:
+node -v = v24.11.1
+npm -v = 11.6.2
+

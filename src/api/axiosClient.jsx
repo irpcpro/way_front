@@ -24,7 +24,7 @@ axiosClient.interceptors.request.use(
         return request;
     },
     (error) => {
-        toast.error('خطای احراز هویت');
+        toast.error('Authentication Error');
         return Promise.reject(error);
     }
 );
@@ -42,20 +42,20 @@ axiosClient.interceptors.response.use(
             }
 
             if(error.status !== 400 && error.status !== 500)
-                toast.error('خطای ناشناخته');
+                toast.error('Unexpected Error');
             return Promise.reject({
                 status: false,
-                message: error.response.data?.message || "خطای ناشناخته",
+                message: error.response.data?.message || "Unexpected Error",
                 code: error.response.status,
                 data: error.response.data?.data || null,
             });
         }
 
 
-        toast.error('ارتباط با سرور برقرار نشد');
+        toast.error('Error on connecting to the server');
         return Promise.reject({
             status: false,
-            message: "ارتباط با سرور برقرار نشد",
+            message: "Error on connecting to the server",
             code: null,
             data: null,
         });

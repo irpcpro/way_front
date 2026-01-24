@@ -1,40 +1,26 @@
 export const config = {
     "routes": {
         "home": "/",
-        "my_badge": "/my-badge",
         "login": "/login",
-        "floor_plan": "/map",
-        "exhibitors": "/exhibitors",
-        "products": "/products",
-        "exhibitor": "/exhibitor",
-        "product": "/product",
-        "conferences": "/conferences",
-        "interviews": "/interviews",
-        "noorbakhsh": "/noorbakhsh",
-        "interview": "/interview",
-        "conference": "/conference",
-        "speaker": "/speaker",
-        "sponsors": "/sponsors",
-        "profile": "/profile",
-        "favorites": "/favorites",
-        "artin_agent": "/artin-agent"
-    },
-    "post_types": {
-        "exhibitor": "exhibitor",
-        "product": "product",
-        "conference": "conference",
-        "speaker": "speaker"
+        "message": "/message",
     },
     "api_token": "authToken",
     "user_details": "user",
     "otp_len": Number(import.meta.env.VITE_OTP_LEN) || 4,
-    "otp_timeout": Number(import.meta.env.VITE_OTP_TIMEOUT) || 120,
+    "otp_timeout": Number(import.meta.env.VITE_OTP_TIMEOUT) || 90,
     "phone_len": 11,
     "phone_start_with": "09",
     "base_url": import.meta.env.VITE_API_BASE_URL,
-    "conferences_status": {
-        "ongoing": "ongoing",
-        "not_started": "not_started",
-        "finished": "finished"
+    "websocket": {
+        "url": import.meta.env.VITE_WEBSOCKET_URL,
+        "url_app": import.meta.env.VITE_WEBSOCKET_URL + 'app/',
+        "app_key": "way_app_key",
+        "app_id": "way_app_id",
+    },
+    "enum": {
+        "message_type": {
+            "text": 1,
+            "attachment": 2
+        }
     }
 }

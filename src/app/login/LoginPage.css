@@ -1,3 +1,6 @@
+.bg-login-color {
+    background: #8472FC !important;
+}
 .phone-input { direction: ltr; }
 .otp-input {
     width: 40px !important;
@@ -15,7 +18,120 @@
 .bg-white-box {
     padding: 30px;
 }
+.title-phonenumber {
+    direction: ltr;
+    text-align: left !important;
+}
 .login-phonenumber {
     direction: ltr;
     text-align: left !important;
+    background: #F0F0FB;
+    width: 100%;
+    padding: 16px 10px 18px;
+    margin: 0 auto;
+    font: 1.2rem Tahoma !important;
+    border-radius: 7px;
+}
+.btn-send-login {
+    background: #8472FC;
+    border-radius: 12px;
+    color: #fff;
+}
+.btn-send-login:hover {
+    background: #7461ea;
+}
+.btn-send-login.btn-disabled {
+    color: #fff;
+    border-color: #CBC4F7 !important;
+    background: #CBC4F7 !important;
+}
+.bg-box-login {
+    flex-direction: column;
+    gap: 20px;
+}
+.bg-login-logo {
+    justify-content: center;
+    flex-direction: column;
+    display: flex;
+}
+.login-logo {
+    width: 80px !important;
+    background: url("../../assets/images/logo.svg") no-repeat center center/100% 100%;
+    height: 80px !important;
+}
+.login-logo-text {
+    width: 57px !important;
+    background: url("../../assets/images/way.svg") no-repeat center center/100% auto;
+    height: 57px !important;
+    margin: 0 auto;
+}
+.copyright {
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    font: 0.8rem Arial;
+    letter-spacing: 1px;
+}
+.text-alert {
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-weight: normal !important;
+}
+.login-loading {
+    background: #8472FC;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 999;
+}
+.login-loading .img-way {
+    width: 80%;
+    max-width: 780px;
+    height: 600px;
+    left: 50%;
+    top: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+}
+.login-loading .img-way .img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+}
+.login-loading .img-way .img img {
+    width: 100%;
+    height: 100%;
+}
+.login-loading .img-way .progressbar {
+    background: #fff;
+    position: absolute;
+    height: 6px;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    margin-bottom: -20px;
+    border-radius: 40px;
+    overflow: hidden;
+}
+.login-loading .img-way .progressbar .bar {
+    background: #EC2B59;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    width: 0%;
+    animation: progress-bar-stripes 0.9s linear 1 forwards;
+}
+@keyframes progress-bar-stripes {
+    0% {width:0%;}
+    20% {width:20%;}
+    25% {width:30%;}
+    30% {width:35%;}
+    60% {width:40%;}
+    70% {width:50%;}
+    85% {width:88%;}
+    95% {width:95%;}
+    100% {width:100%;}
 }

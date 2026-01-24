@@ -1,0 +1,16 @@
+.header-logo {
+    display: flex;
+    justify-content: start;
+    flex-direction: row;
+    align-items: center;
+}
+.header-logo-img {
+    background: url("../../assets/images/way2.svg") no-repeat center center/100% 100%;
+    width: 30px;
+    height: 30px;
+}
+.header-logo-text {
+    background: url("../../assets/images/way.svg") no-repeat center center/100% 100%;
+    width: 40px;
+    height: 13px;
+}

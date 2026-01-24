@@ -2,8 +2,8 @@ import axiosClient from "./axiosClient.jsx";
 
 
 const authApi = {
-    sendOtp: (mobile) => axiosClient.post(`v1/login/send-otp`, { mobile }),
-    verifyOtp: (mobile, otp) => axiosClient.post(`v1/login/verify-otp`, {mobile, otp}),
+    sendOtp: (mobile) => axiosClient.post(`v1/auth/send_code`, { mobile }),
+    verifyOtp: (mobile, code) => axiosClient.post(`v1/auth/confirmation_code`, {mobile, code}),
     logout: () => axiosClient.post('v1/logout')
 };
 

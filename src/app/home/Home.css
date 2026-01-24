@@ -172,3 +172,18 @@ body {
     font-size: 1.6rem;
     margin-right: 3px;
 }
+.make-conversation {
+    background: url("../../assets/images/nothing.svg") center center / 100% 100% no-repeat;
+    width: 140px;
+    height: 140px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+.make-conversation-text {
+    font: 0.9rem Arial;
+    text-align: center;
+    margin: 20px;
+    color: #cccccc;
+}

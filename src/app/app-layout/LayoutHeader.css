@@ -1,0 +1,6 @@
+#main-header {
+    flex: 0 1 auto;
+    background: #8472FC;
+    padding: 10px 5px;
+    max-height: 60px;
+}

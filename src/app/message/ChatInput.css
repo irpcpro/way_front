@@ -1,0 +1,56 @@
+.bg-chat-text {
+    background: #fff;
+    border-top: 1px solid #ececec;
+    box-shadow: 0 -4px 14px -13px #F9F9FD;
+    padding: 14px 12px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+.bg-chat-text .chat-textarea,
+.bg-chat-text .chat-textarea:active{
+    background: #F0F0FB;
+    border: none !important;
+    border-radius: 6px;
+    /*height: 100%;*/
+    width: 100%;
+    resize: none;
+    padding: 4px 13px;
+    outline: none;
+    font: 0.8rem/1.4rem Arial, Helvetica, sans-serif;
+}
+.chat-textarea:focus {
+    outline: none;
+    border-color: #4d90fe;
+    box-shadow: none;
+}
+.bg-chat-text .text {
+    flex: 0 1 auto;
+    width: 100%;
+}
+.bg-chat-text .btns {
+    flex: 1 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    gap: 3px;
+}
+.bg-chat-text .btns .send-btn {
+    width: 34px;
+    height: 34px;
+    cursor: pointer;
+    background: url("../../assets/images/send.svg") center center/21px 18px no-repeat;
+}
+.bg-chat-text .btns .send-btn.active {
+    background: url("../../assets/images/send-color.svg") center center/21px 18px no-repeat;
+}
+.bg-chat-text .btns .attach-btn {
+    width: 34px;
+    height: 34px;
+    cursor: pointer;
+    background: url("../../assets/images/picture-icon.svg") center center/23px 17px no-repeat;
+}
+.bg-chat-text .btns .attach-btn:hover {
+    background: url("../../assets/images/picture-icon-color2.svg") center center/23px 17px no-repeat;
+}

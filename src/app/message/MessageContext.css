@@ -1,0 +1,91 @@
+.msg {
+    margin-bottom: 5px;
+    padding: 3px 7px;
+    border-radius: 5px;
+    width: 100%;
+}
+.msg .bg-msg {
+    max-width: 90%;
+    display: inline-block;
+}
+.msg.me {
+    direction: rtl;
+}
+.msg.me .bg-msg {
+    max-width: 90%;
+}
+.msg .bg-msg .bg-text {
+    padding: 3px 9px 4px;
+    background: #F0F0FB;
+    color: #495969;
+    border-radius: 8px 8px 8px 0;
+    word-wrap: break-word;
+}
+.msg.me .bg-msg .bg-text {
+    background: #8472FC;
+    border-radius: 8px 8px 0 8px;
+    color: #fff;
+}
+.msg .message-det {
+    margin-top: 5px;
+}
+.msg.me .message-det {
+    color: #B6B9C3;
+    font: 0.7rem Arial, Helvetica, sans-serif;
+}
+.msg .message-det .time {
+    color: #B6B9C3;
+    font: 0.7rem Arial, Helvetica, sans-serif;
+}
+.msg .message-det .state {
+    margin-right: 5px;
+}
+.msg .message-det .time, .msg .message-det .state {
+    float: right;
+}
+.msg.me .message-det .time, .msg.me .message-det .state {
+    float: left;
+}
+.msg.me .message-det .state {
+    margin-left: 5px;
+    margin-right: 0;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+.msg-status {
+    background: url("../../assets/images/tick.svg") center center/10px 9px no-repeat;
+    width: 14px;
+    height: 14px;
+}
+.msg-status.read {
+    background: url("../../assets/images/2tick-color.svg") center center/16px 9px no-repeat;
+    width: 17px;
+    height: 14px;
+}
+.circle-loading {
+    display: flex;
+    height: 14px;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    gap: 2px;
+}
+.circle-loading .circle {
+    background: url("../../assets/images/circle.svg") center center/6px 6px no-repeat;
+    width: 6px;
+    height: 6px;
+}
+.circle-loading .circle:nth-child(1) {
+    animation: 0.8s waiting_circles linear infinite 0s;
+}
+.circle-loading .circle:nth-child(2) {
+    animation: 0.8s waiting_circles linear infinite 0.1s;
+}
+.circle-loading .circle:nth-child(3) {
+    animation: 0.8s waiting_circles linear infinite 0.2s;
+}
+.message-attachment {
+    margin: 10px 0;
+    cursor: pointer;
+}
