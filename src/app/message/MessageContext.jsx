@@ -1,8 +1,48 @@
 import "./MessageContext.css"
 import {config} from "./../../config/globalConfig.jsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
-function MessageContext({message, user, setSeeImageAttachment}) {
+function MessageContext({message, user, setSeeImageAttachment, status}) {
+
+    const [msgStatus, setMsgStatus] = useState(status);
+
+    const renderStatusBar = () => {
+        console.log('status =====', message, user, setSeeImageAttachment, status)
+        switch (status) {
+            case config.enum.message_status.sending:
+                return (
+                    <div className="circle-loading">
+                        <div className="circle"></div>
+                        <div className="circle"></div>
+                        <div className="circle"></div>
+                    </div>
+                );
+            case config.enum.message_status.sent: {
+                if (message.is_current_user)
+                    return <div className="msg-status"></div>
+                else
+                    return '';
+            }
+            case config.enum.message_status.failed:
+                return <div className="msg-status failed-icon"></div>;
+            default:
+            {
+                if (message.is_current_user)
+                    return <div className="msg-status"></div>
+                else
+                    return '';
+            }
+        }
+    }
+
+    useEffect(() => {
+        setMsgStatus(status)
+    }, [status]);
+
+
+    useEffect(() => {
+        console.log('msgStatus ====', msgStatus, message.id_message)
+    }, [msgStatus])
 
     return (
         <>
@@ -27,11 +67,7 @@ function MessageContext({message, user, setSeeImageAttachment}) {
                         <div className="state">
                             {/*<div className={`msg-status ${false && 'read'}`}></div>*/}
 
-                            {/*<div className="circle-loading">*/}
-                            {/*    <div className="circle"></div>*/}
-                            {/*    <div className="circle"></div>*/}
-                            {/*    <div className="circle"></div>*/}
-                            {/*</div>*/}
+                            {renderStatusBar()}
                         </div>
                         <div className="clear"></div>
                     </div>

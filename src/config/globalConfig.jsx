@@ -21,6 +21,11 @@ export const config = {
         "message_type": {
             "text": 1,
             "attachment": 2
+        },
+        "message_status": {
+            "sending": "sending",
+            "failed": "failed",
+            "sent": "sent"
         }
     }
 }

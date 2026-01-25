@@ -16,6 +16,13 @@ function ChatInput ({onSendHandle}) {
         textarea.style.height = `${newHeight}px`;
     };
 
+    const handleKeyDown = (e) => {
+        if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            sendMsg();
+        }
+    };
+
     const sendMsg = () => {
         if(!activeSendBtn) return
         onSendHandle(value)
@@ -30,6 +37,7 @@ function ChatInput ({onSendHandle}) {
                     className="chat-textarea"
                     value={value}
                     onChange={handleChange}
+                    onKeyDown={handleKeyDown}
                     style={{
                         overflowY: value.split('\n').length > 4 ? 'auto' : 'hidden',
                         minHeight: '24px',

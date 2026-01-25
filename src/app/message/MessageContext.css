@@ -58,6 +58,11 @@
     width: 14px;
     height: 14px;
 }
+.msg-status.sent {
+    background: url("../../assets/images/2tick.svg") center center/16px 9px no-repeat;
+    width: 17px;
+    height: 14px;
+}
 .msg-status.read {
     background: url("../../assets/images/2tick-color.svg") center center/16px 9px no-repeat;
     width: 17px;

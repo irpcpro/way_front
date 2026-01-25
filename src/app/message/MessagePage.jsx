@@ -14,6 +14,7 @@ import MessageContext from "./MessageContext.jsx";
 import SendMessageApi from "../../api/SendMessageApi.jsx";
 import {config} from "../../config/globalConfig.jsx";
 import { subscribeMessageHooks } from "../websocket/subscribeChats.jsx";
+import { v4 as uuid4 } from "uuid";
 
 function MessagePage(callback, deps) {
     const MessageID = useParams().id;
@@ -56,8 +57,8 @@ function MessagePage(callback, deps) {
                         setMessageDetails(prev => ({
                             ...response.data,
                             chats: [
-                                ...response.data.chats, // پیام‌های قدیمی‌تر
-                                ...prev.chats           // پیام‌های فعلی
+                                ...response.data.chats,
+                                ...prev.chats
                             ]
                         }));
                     }
@@ -98,39 +99,70 @@ function MessagePage(callback, deps) {
     }
 
     const onSendMessageHandle = (msg) => {
-        let data = {
-            'context': msg,
-            'id_message_hook': MessageID,
-            'type': config.enum.message_type.text
-        }
-        SendMessageApi.send(data).then((response) => {
+        const clientId = uuid4();
+
+        // پیام skeleton
+        const optimisticMsg = {
+            message: {
+                client_id: clientId,
+                context: msg,
+                is_current_user: true
+            },
+            user: messageDetails.members[0],
+            status: config.enum.message_status.sending
+        };
+
+        // اضافه کردن optimistic message
+        setMessageDetails(prev => ({
+            ...prev,
+            chats: [...prev.chats, optimisticMsg]
+        }));
+
+        // ارسال پیام
+        SendMessageApi.send({
+            context: msg,
+            uuid: clientId,
+            id_message_hook: MessageID,
+            type: config.enum.message_type.text,
+            client_id: clientId,
+        }).catch(() => {
+            // در صورت خطا وضعیت رو update کن
             setMessageDetails(prev => ({
                 ...prev,
-                chats: [
-                    ...prev.chats,
-                    response.data
-                ]
-            }))
-        }).catch((error) => {
-            toast.error(error.message)
-        })
-    }
+                chats: prev.chats.map(item =>
+                    item.message.client_id === clientId
+                        ? { ...item, status: config.enum.message_status.failed }
+                        : item
+                )
+            }));
+        });
+    };
 
-    const DoSub = useCallback(() =>{
+    const DoSub = useCallback(() => {
         if (!MessageID) return;
 
         subscribeMessageHooks([Number(MessageID)], (newMsg) => {
-            console.log("✅ [WS] new message in MessagePage:", newMsg);
-
             setMessageDetails(prev => {
                 if (!prev) return prev;
 
-                return {
-                    ...prev,
-                    chats: [...prev.chats, newMsg]
-                };
+                let updated = prev.chats.map(item => {
+                    if (item.message.client_id && newMsg.uuid === item.message.client_id) {
+                        let FinalMsg = { ...newMsg, status: config.enum.message_status.sent };
+                        FinalMsg.message.is_current_user = true;
+                        return FinalMsg;
+                    }
+                    return item;
+                });
+
+                const exists = updated.some(item => item.message.id_message === newMsg.message.id_message);
+                if (!exists) updated = [...updated, { ...newMsg, status: config.enum.message_status.sent }];
+
+                updated.sort((a, b) => new Date(a.message.created_at) - new Date(b.message.created_at));
+
+                return { ...prev, chats: updated };
             });
 
+            // scroll to bottom
             if (listTextsRef.current) {
                 listTextsRef.current.scrollTo({
                     top: listTextsRef.current.scrollHeight,
@@ -138,7 +170,7 @@ function MessagePage(callback, deps) {
                 });
             }
         });
-    })
+    }, [MessageID]);
 
     useEffect(() => {
         DoSub()
@@ -196,11 +228,13 @@ function MessagePage(callback, deps) {
                                     }
 
                                     {
-                                        messageDetails?.chats.map((msg) =>
+                                        messageDetails?.chats.map((msg, index) =>
                                             <div key={msg.message.id_message} className="message-fade">
                                                 <MessageContext
+                                                    key={msg.id_message ?? msg.client_id?? index}
                                                     message={msg.message}
-                                                    user={msg.user}
+                                                    status={msg.status ?? null}
+                                                    user={msg.user?? []}
                                                     setSeeImageAttachment={setSeeImageAttachment}
                                                 />
                                             </div>

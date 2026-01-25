@@ -6,16 +6,16 @@ import {LayoutHeaderContext} from "../app-layout/LayoutHeader.jsx";
 import HeaderLogo from "../components/HeaderLogo.jsx";
 import FooterNav from "../components/FooterNav.jsx";
 import HomeSkeletonChats from "./HomeSkeletonChats.jsx";
-import {useCallback, useEffect, useState} from "react";
+import {useCallback, useEffect, useRef, useState} from "react";
 import GetListMessagesApi from "../../api/GetListMessagesApi.jsx";
 import toast from "react-hot-toast";
 import HomeListMessages from "./HomeListMessages.jsx";
 import { subscribeMessageHooks } from "../websocket/subscribeChats.jsx";
 
 function Home() {
-
     const [listMessages, setListMessages] = useState([]);
     const [listMessagesLoading, setListMessagesLoading] = useState(true);
+    const subscribedRef = useRef(false);
 
     const getMessages = () => {
         GetListMessagesApi.getListMessages().then((response) => {
@@ -33,6 +33,9 @@ function Home() {
 
     useEffect(() => {
         if (!listMessages.length) return;
+        if (subscribedRef.current) return;
+
+        subscribedRef.current = true;
 
         const hooks = listMessages.map(item => item.message.id_message_hook);
 
@@ -40,15 +43,16 @@ function Home() {
             console.log("[WS] new message in Home:", newMsg);
 
             setListMessages(prevList => {
-                const exists = prevList.some(
-                    item => item.message.id_message_hook === newMsg.id_message_hook
+                const filtered = prevList.filter(
+                    item => item.message.id_message_hook !== newMsg.message.id_message_hook
                 );
 
-                if (!exists) {
-                    return [...prevList, { message: newMsg, user: newMsg.user }];
-                }
+                const newItem = {
+                    message: newMsg.message ?? newMsg,
+                    user: newMsg.user
+                };
 
-                return prevList;
+                return [newItem, ...filtered];
             });
         });
     }, [listMessages]);

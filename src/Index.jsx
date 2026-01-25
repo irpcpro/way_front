@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import {Routes, Route, Navigate, useNavigate} from 'react-router-dom';
 import PrivateRoute from './app/components/PrivateRoute';
 import { AuthProvider } from './app/context/AuthContext';
 import './CssReset.css'
@@ -17,6 +17,13 @@ import useWebSocketInit from "./app/websocket/useWebSocketInit.jsx";
 
 function Index() {
     useWebSocketInit();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (performance.getEntriesByType("navigation")[0]?.type === "reload") {
+            navigate("/", { replace: true });
+        }
+    }, []);
 
     return (
         <AuthProvider>
