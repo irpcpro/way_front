@@ -16,6 +16,12 @@ export const config = {
         "url_app": import.meta.env.VITE_WEBSOCKET_URL + 'app/',
         "app_key": "way_app_key",
         "app_id": "way_app_id",
+        "private_message_hook": "private-new_messages.id_message_hook.",
+        "events": {
+            "new_message": "new_messages",
+            "user_start_typing": "client-typing",
+            "user_end_typing": "client-end-typing"
+        }
     },
     "enum": {
         "message_type": {

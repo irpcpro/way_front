@@ -1,12 +1,13 @@
 import "./ChatInput.css"
 import {useState} from "react";
 
-function ChatInput ({onSendHandle}) {
+function ChatInput ({onSendHandle, onTyping}) {
     const [value, setValue] = useState('');
     const [activeSendBtn, setActiveSendBtn] = useState(false);
 
     const handleChange = (e) => {
         const textarea = e.target;
+        onTyping?.();
         setValue(textarea.value);
 
         setActiveSendBtn(textarea.value !== '');

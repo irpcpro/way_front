@@ -1,5 +1,6 @@
 // src/app/websocket/WebSocketService.jsx
 import {config} from "../../config/globalConfig.jsx";
+import toast from "react-hot-toast";
 
 class WebSocketService {
     constructor(url) {
@@ -26,6 +27,8 @@ class WebSocketService {
             try {
                 const data = JSON.parse(e.data);
 
+                console.log('💢 New Socket Packet Data', data)
+
                 if (data.event === "pusher:connection_established") {
                     const parsed = JSON.parse(data.data);
                     this.socketId = parsed.socket_id;
@@ -34,8 +37,15 @@ class WebSocketService {
                 }
 
                 const { channel, event, payload } = data;
+                if (typeof data.data === "string") {
+                    try {
+                        data.data = JSON.parse(data.data);
+                    } catch(err) {
+                        toast.error('Error unpacking data!')
+                    }
+                }
                 if (this.channels[channel] && this.channels[channel][event]) {
-                    this.channels[channel][event].forEach(cb => cb(JSON.parse(data.data)));
+                    this.channels[channel][event].forEach(cb => cb(data));
                 }
             } catch (err) {
                 console.error("[WS] parse error:", err);
@@ -63,10 +73,21 @@ class WebSocketService {
         }
     }
 
-    bind(data, event, callback) {
-        if (!this.channels[data.channel]) this.subscribe(data);
-        if (!this.channels[data.channel][event]) this.channels[data.channel][event] = [];
-        this.channels[data.channel][event].push(callback);
+    bind(data, events, callback) {
+        if (!this.channels[data.channel]) {
+            this.subscribe(data);
+        }
+
+        if (!Array.isArray(events)) {
+            events = [events];
+        }
+
+        events.forEach(event => {
+            if (!this.channels[data.channel][event]) {
+                this.channels[data.channel][event] = [];
+            }
+            this.channels[data.channel][event].push(callback);
+        });
     }
 
     send(data) {

@@ -13,8 +13,9 @@ import SpinnerLoading from "../components/Spinner.jsx";
 import MessageContext from "./MessageContext.jsx";
 import SendMessageApi from "../../api/SendMessageApi.jsx";
 import {config} from "../../config/globalConfig.jsx";
-import { subscribeMessageHooks } from "../websocket/subscribeChats.jsx";
+import {subscribeMessageHooks, WSSendEvent} from "../websocket/subscribeChats.jsx";
 import { v4 as uuid4 } from "uuid";
+import WS from "../websocket/WebSocketService.jsx";
 
 function MessagePage(callback, deps) {
     const MessageID = useParams().id;
@@ -31,6 +32,8 @@ function MessagePage(callback, deps) {
 
     const [seeImageAttachment, setSeeImageAttachment] = useState(null);
 
+    const [isTyping, setIsTyping] = useState(false);
+    const typingTimerRef = useRef(null);
 
     const loadMoreMessages = () => {
         if (!listTextsRef.current) return;
@@ -138,43 +141,97 @@ function MessagePage(callback, deps) {
         });
     };
 
+
+    const onMessageReceiveMapper = (newMsg) => {
+        switch (newMsg.event) {
+            case config.websocket.events.new_message:
+                onSocketNewMessage(newMsg.data);
+                break;
+            case config.websocket.events.user_start_typing:
+                onSocketUserStartTyping(newMsg.data);
+                break;
+            case config.websocket.events.user_end_typing:
+                onSocketUserEndTyping(newMsg.data);
+                break
+        }
+    }
+
+
+    const onSocketNewMessage = (newMessage) => {
+        setMessageDetails(prev => {
+            if (!prev) return prev;
+
+            setIsTyping(false);
+
+            let updated = prev.chats.map(item => {
+                if (item.message.client_id && newMessage.uuid === item.message.client_id) {
+                    let FinalMsg = { ...newMessage, status: config.enum.message_status.sent };
+                    FinalMsg.message.is_current_user = true;
+                    return FinalMsg;
+                }
+                return item;
+            });
+
+            const exists = updated.some(item => item.message.id_message === newMessage.message.id_message);
+            if (!exists) updated = [...updated, { ...newMessage, status: config.enum.message_status.sent }];
+
+            updated.sort((a, b) => new Date(a.message.created_at) - new Date(b.message.created_at));
+
+            return { ...prev, chats: updated };
+        });
+
+        // scroll to bottom
+        if (listTextsRef.current) {
+            listTextsRef.current.scrollTo({
+                top: listTextsRef.current.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
+    }
+
+    const onSocketUserStartTyping = (newMessage) => {
+        setIsTyping(true);
+    }
+
+    const onSocketUserEndTyping = (newMessage) => {
+        setIsTyping(false);
+    }
+
     const DoSub = useCallback(() => {
         if (!MessageID) return;
 
-        subscribeMessageHooks([Number(MessageID)], (newMsg) => {
-            setMessageDetails(prev => {
-                if (!prev) return prev;
+        let listEvents = [
+            config.websocket.events.new_message,
+            config.websocket.events.user_start_typing,
+            config.websocket.events.user_end_typing
+        ];
+        subscribeMessageHooks([Number(MessageID)], onMessageReceiveMapper, listEvents);
+    }, [MessageID]);
 
-                let updated = prev.chats.map(item => {
-                    if (item.message.client_id && newMsg.uuid === item.message.client_id) {
-                        let FinalMsg = { ...newMsg, status: config.enum.message_status.sent };
-                        FinalMsg.message.is_current_user = true;
-                        return FinalMsg;
-                    }
-                    return item;
-                });
-
-                const exists = updated.some(item => item.message.id_message === newMsg.message.id_message);
-                if (!exists) updated = [...updated, { ...newMsg, status: config.enum.message_status.sent }];
-
-                updated.sort((a, b) => new Date(a.message.created_at) - new Date(b.message.created_at));
-
-                return { ...prev, chats: updated };
-            });
-
-            // scroll to bottom
-            if (listTextsRef.current) {
-                listTextsRef.current.scrollTo({
-                    top: listTextsRef.current.scrollHeight,
-                    behavior: 'smooth'
-                });
-            }
-        });
+    useEffect(() => {
+        return () => {
+            setIsTyping(false);
+            clearTimeout(typingTimerRef.current);
+        };
     }, [MessageID]);
 
     useEffect(() => {
         DoSub()
     }, [MessageID]);
+
+    const sendTypingSignal = () => {
+        let packet = {
+            channel: config.websocket.private_message_hook + MessageID,
+            data: {
+                idUser: 2
+            }
+        };
+        WSSendEvent(packet, config.websocket.events.user_start_typing);
+        clearTimeout(typingTimerRef.current);
+        typingTimerRef.current = setTimeout(() => {
+            WSSendEvent(packet, config.websocket.events.user_end_typing);
+        }, 5000);
+    };
 
     return (
         <LayoutMainContext>
@@ -247,16 +304,23 @@ function MessagePage(callback, deps) {
                 }
             </LayoutContentContext>
             <LayoutFooterContext>
-                {/*<div className="someone-typing">*/}
-                {/*    <div className="circle-loading">*/}
-                {/*        <div className="circle"></div>*/}
-                {/*        <div className="circle"></div>*/}
-                {/*        <div className="circle"></div>*/}
-                {/*    </div>*/}
-                {/*    <div className="name">Alex is typing ..</div>*/}
-                {/*</div>*/}
+                {isTyping && (
+                    <div className="someone-typing">
+                        <div className="circle-loading">
+                            <div className="circle"></div>
+                            <div className="circle"></div>
+                            <div className="circle"></div>
+                        </div>
+                        <div className="name">
+                            Typing ..
+                        </div>
+                    </div>
+                )}
 
-                <ChatInput onSendHandle={onSendMessageHandle} />
+                <ChatInput
+                    onSendHandle={onSendMessageHandle}
+                    onTyping={sendTypingSignal}
+                />
             </LayoutFooterContext>
         </LayoutMainContext>
     );
