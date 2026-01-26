@@ -34,6 +34,7 @@ function MessagePage(callback, deps) {
 
     const [isTyping, setIsTyping] = useState(false);
     const typingTimerRef = useRef(null);
+    const lastTypingSentRef = useRef(0);
 
     const loadMoreMessages = () => {
         if (!listTextsRef.current) return;
@@ -220,17 +221,30 @@ function MessagePage(callback, deps) {
     }, [MessageID]);
 
     const sendTypingSignal = () => {
-        let packet = {
+        const now = Date.now();
+
+        const packet = {
             channel: config.websocket.private_message_hook + MessageID,
             data: {
-                idUser: 2
+                id_message_hook: MessageID
             }
         };
-        WSSendEvent(packet, config.websocket.events.user_start_typing);
+
+        // ✅ throttle: هر time_send_typing فقط یک start
+        if (
+            !lastTypingSentRef.current ||
+            now - lastTypingSentRef.current >= config.websocket.time_send_typing
+        ) {
+            WSSendEvent(packet, config.websocket.events.user_start_typing);
+            lastTypingSentRef.current = now;
+        }
+
+        // ✅ idle: اگر تایپ قطع شد end بفرست
         clearTimeout(typingTimerRef.current);
         typingTimerRef.current = setTimeout(() => {
             WSSendEvent(packet, config.websocket.events.user_end_typing);
-        }, 5000);
+            lastTypingSentRef.current = null; // reset
+        }, config.websocket.time_send_end_typing);
     };
 
     return (

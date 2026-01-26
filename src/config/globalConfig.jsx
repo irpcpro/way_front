@@ -21,7 +21,9 @@ export const config = {
             "new_message": "new_messages",
             "user_start_typing": "client-typing",
             "user_end_typing": "client-end-typing"
-        }
+        },
+        "time_send_typing": 7000,
+        "time_send_end_typing": 10000,
     },
     "enum": {
         "message_type": {

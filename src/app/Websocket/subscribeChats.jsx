@@ -23,7 +23,6 @@ export const subscribeMessageHooks = (hooks = [], onNewMessage, events = []) => 
                         console.log("✅ message received:", msg);
                         onNewMessage?.(msg);
                     }
-                    // onReceiveOtherActions
                 );
             });
         }).catch(err=>{
