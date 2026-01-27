@@ -2,13 +2,15 @@ import "./HomeListMessages.css"
 import {config} from "../../config/globalConfig.jsx";
 import {useNavigate} from "react-router-dom";
 
-const HomeListMessages = ({item}) => {
+const HomeListMessages = ({item, userTyping = null}) => {
     const navigate = useNavigate();
 
     const seeMessage = () => {
         // navigate(config.routes.message, item.message.id_message)
         navigate(config.routes.message + '/' + item.message.id_message_hook)
     }
+
+    console.log('userTypinguserTyping', userTyping)
 
     return (
         <div onClick={seeMessage} className="message-item">
@@ -29,14 +31,16 @@ const HomeListMessages = ({item}) => {
                 <div className="bottom">
                     <div className="message">
                         {
-                            item.message.type === config.enum.message_type.text ? (
-                                item.message.context
-                            ) : (
-                                <>
-                                    <div className="attachment-image-pic"></div>
-                                    {item.message?.context !== null ? item.message.context : (<span className="colorly">Sent an attachment</span>)}
-                                </>
-                            )
+                            userTyping != null
+                                ? (<div className="item-typing">{userTyping.name ? userTyping.name + ' is typing ...' : 'typing ..'}</div>)
+                                : item.message.type === config.enum.message_type.text ? (
+                                        item.message.context
+                                    ) : (
+                                        <>
+                                            <div className="attachment-image-pic"></div>
+                                            {item.message?.context !== null ? item.message.context : (<span className="colorly">Sent an attachment</span>)}
+                                        </>
+                                    )
                         }
                     </div>
                     {/*<div className="new-msg">*/}

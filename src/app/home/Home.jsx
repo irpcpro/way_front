@@ -17,6 +17,7 @@ function Home() {
     const [listMessages, setListMessages] = useState([]);
     const [listMessagesLoading, setListMessagesLoading] = useState(true);
     const subscribedRef = useRef(false);
+    const [usersTyping, setUsersTyping] = useState([]);
 
     const getMessages = () => {
         GetListMessagesApi.getListMessages().then((response) => {
@@ -33,7 +34,9 @@ function Home() {
     }, []);
 
     const onSocketNewMessage = (newMsg) => {
-        console.log("[WS] new message in Home:", newMsg);
+        setUsersTyping(prev => [
+            ...prev.filter(item => item.id_message_hook !== newMsg.message.id_message_hook),
+        ]);
 
         setListMessages(prevList => {
             const filtered = prevList.filter(
@@ -49,17 +52,34 @@ function Home() {
         });
     }
 
+    const onSocketUserStartTyping = (message) => {
+        setUsersTyping(prev => [
+            ...prev,
+            {
+                id_message_hook: message.id_message_hook,
+                user_uuid: message.user_uuid,
+                name: message.name,
+            }
+        ]);
+    }
+
+    const onSocketUserEndTyping = (message) => {
+        setUsersTyping(prev => [
+            ...prev.filter(item => item.id_message_hook !== message.id_message_hook),
+        ]);
+    }
+
     const onMessageReceiveMapper = (newMsg) => {
         switch (newMsg.event) {
             case config.websocket.events.new_message:
                 onSocketNewMessage(newMsg.data);
                 break;
-            // case config.websocket.events.user_start_typing:
-            //     onSocketUserStartTyping(newMsg.data);
-            //     break;
-            // case config.websocket.events.user_end_typing:
-            //     onSocketUserEndTyping(newMsg.data);
-            //     break
+            case config.websocket.events.user_start_typing:
+                onSocketUserStartTyping(newMsg.data);
+                break;
+            case config.websocket.events.user_end_typing:
+                onSocketUserEndTyping(newMsg.data);
+                break
         }
     }
 
@@ -101,7 +121,11 @@ function Home() {
                     !listMessagesLoading ? (
                         listMessages.length?(
                             listMessages.map((item) => (
-                                <HomeListMessages key={item.message.id_message} item={item} />
+                                <HomeListMessages
+                                    userTyping={usersTyping.find(usrTyp => usrTyp.id_message_hook === item.message.id_message_hook)}
+                                    key={item.message.id_message}
+                                    item={item}
+                                />
                             ))
                         ):(
                             <>

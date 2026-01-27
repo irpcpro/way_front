@@ -16,6 +16,7 @@ import {config} from "../../config/globalConfig.jsx";
 import {subscribeMessageHooks, WSSendEvent} from "../websocket/subscribeChats.jsx";
 import { v4 as uuid4 } from "uuid";
 import WS from "../websocket/WebSocketService.jsx";
+import {getUser} from "../utils/storage.jsx";
 
 function MessagePage(callback, deps) {
     const MessageID = useParams().id;
@@ -32,9 +33,15 @@ function MessagePage(callback, deps) {
 
     const [seeImageAttachment, setSeeImageAttachment] = useState(null);
 
-    const [isTyping, setIsTyping] = useState(false);
+    const [userTyping, setUserTyping] = useState(null);
     const typingTimerRef = useRef(null);
     const lastTypingSentRef = useRef(0);
+
+    const [currentUser, setCurrentUser] = useState(null);
+
+    useEffect(() => {
+        setCurrentUser(getUser())
+    }, []);
 
     const loadMoreMessages = () => {
         if (!listTextsRef.current) return;
@@ -162,7 +169,7 @@ function MessagePage(callback, deps) {
         setMessageDetails(prev => {
             if (!prev) return prev;
 
-            setIsTyping(false);
+            setUserTyping(null);
 
             let updated = prev.chats.map(item => {
                 if (item.message.client_id && newMessage.uuid === item.message.client_id) {
@@ -191,11 +198,15 @@ function MessagePage(callback, deps) {
     }
 
     const onSocketUserStartTyping = (newMessage) => {
-        setIsTyping(true);
+        setUserTyping({
+            id_message_hook: newMessage.id_message_hook,
+            user_uuid: newMessage.user_uuid,
+            name: newMessage.name,
+        });
     }
 
     const onSocketUserEndTyping = (newMessage) => {
-        setIsTyping(false);
+        setUserTyping(null);
     }
 
     const DoSub = useCallback(() => {
@@ -211,7 +222,7 @@ function MessagePage(callback, deps) {
 
     useEffect(() => {
         return () => {
-            setIsTyping(false);
+            setUserTyping(null);
             clearTimeout(typingTimerRef.current);
         };
     }, [MessageID]);
@@ -226,7 +237,9 @@ function MessagePage(callback, deps) {
         const packet = {
             channel: config.websocket.private_message_hook + MessageID,
             data: {
-                id_message_hook: MessageID
+                id_message_hook: Number(MessageID),
+                user_uuid: currentUser?.uuid ?? null,
+                name: currentUser?.name ?? null,
             }
         };
 
@@ -318,7 +331,7 @@ function MessagePage(callback, deps) {
                 }
             </LayoutContentContext>
             <LayoutFooterContext>
-                {isTyping && (
+                {userTyping !== null && (
                     <div className="someone-typing">
                         <div className="circle-loading">
                             <div className="circle"></div>
@@ -326,7 +339,11 @@ function MessagePage(callback, deps) {
                             <div className="circle"></div>
                         </div>
                         <div className="name">
-                            Typing ..
+                            {
+                                userTyping.name
+                                    ? userTyping.name + ' is typing ...'
+                                    : 'typing ..'
+                            }
                         </div>
                     </div>
                 )}
