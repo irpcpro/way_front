@@ -1,0 +1,32 @@
+.bg-search-input {
+    background: #fff;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    gap: 7px;
+    flex-direction: row;
+    padding: 5px 4px;
+    margin: 0 10px;
+    border-radius: 7px;
+}
+.bg-search-input .search-icon {
+    width: 25px;
+    height: auto;
+    background: url("../../assets/images/search.svg") no-repeat center center/80% 100%;
+}
+.bg-search-input .search-input {
+    width: 100%;
+    border: none;
+    font: 0.8rem/1.5rem Tahoma, sans-serif;
+}
+.bg-search-input .search-input:focus {
+    outline: none;
+    border-color: #4d90fe;
+    box-shadow: none;
+}
+.search-for-conversation {
+    text-align: center;
+    font: 0.8rem/1.5 Tahoma, Verdana, Arial;
+    margin-top: 10px;
+    color: #b0b0b0;
+}

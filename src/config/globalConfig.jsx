@@ -1,6 +1,7 @@
 export const config = {
     "routes": {
         "home": "/",
+        "search": "/search",
         "login": "/login",
         "message": "/message",
     },

@@ -14,6 +14,7 @@ import InstallAppPrompt from "./app/login/InstallAppPrompt.jsx";
 import './i18n';
 import MessagePage from "./app/message/MessagePage.jsx";
 import useWebSocketInit from "./app/websocket/useWebSocketInit.jsx";
+import Search from "./app/Search/Search.jsx";
 
 function Index() {
     useWebSocketInit();
@@ -34,6 +35,7 @@ function Index() {
                 <Route element={<PrivateRoute />}>
                     <Route path={config.routes.home} element={<Home />} />
                     <Route path={`${config.routes.message}/:id`} element={<MessagePage />} />
+                    <Route path={config.routes.search} element={<Search />} />
                 </Route>
 
                 <Route path="*" element={<NotFound />} />
