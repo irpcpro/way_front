@@ -1,0 +1,17 @@
+.btn-make-conversation {
+    width: 100%;
+    text-align: center;
+    background: #8472FC;
+    padding: 10px 15px;
+    color: #fff;
+    font: 0.9rem/1.5 Tahoma, Verdana, Arial;
+    cursor: pointer;
+}
+.btn-make-conversation.loading {
+    background: #C4B2FF;
+}
+.btn-make-conversation.loading .spinner-border {
+    font-size: 0.7rem;
+    width: 18px;
+    height: 18px;
+}

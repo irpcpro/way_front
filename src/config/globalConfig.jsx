@@ -4,6 +4,7 @@ export const config = {
         "search": "/search",
         "login": "/login",
         "message": "/message",
+        "new_conversation": "/new_conversation",
     },
     "api_token": "authToken",
     "user_details": "user",

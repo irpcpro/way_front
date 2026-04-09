@@ -6,11 +6,16 @@ import {LayoutHeaderContext} from "../app-layout/LayoutHeader.jsx";
 import HeaderLogo from "../components/HeaderLogo.jsx";
 import FooterNav from "../components/FooterNav.jsx";
 import HomeSkeletonChats from "../home/HomeSkeletonChats.jsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import SearchUserApi from "../../api/SearchUserApi.jsx";
+import SearchBox from "../components/SearchBox.jsx";
+import toast from "react-hot-toast";
+import SearchListMessages from "./SearchListMessages.jsx";
 
 function Search() {
     const [searching, setSearching] = useState(false);
     const [listUsers, setListUsers] = useState([]);
+    const [searchText, setSearchText] = useState('');
 
     const SkeletonLoading = () => (
         <>
@@ -21,17 +26,29 @@ function Search() {
         </>
     )
 
+    useEffect(() => {
+        if(searchText === '') {
+            setListUsers([])
+            return
+        }
+
+        setSearching(true)
+        SearchUserApi.search(searchText).then((res)=>{
+            setListUsers(res.data)
+        }).catch((error)=>{
+            toast.error(error.message)
+        }).finally(()=>{
+            setSearching(false)
+        })
+    }, [searchText]);
+
     return (
         <LayoutMainContext>
             <LayoutHeaderContext>
 
                 <div className="bg-search-input">
                     <div className="search-icon"></div>
-                    <input
-                        placeholder="Search ID, Phone or Name"
-                        className="search-input"
-                        type="text"
-                    />
+                    <SearchBox onSearch={setSearchText} searching={searching} delayTime={800} placeholder="Search ID, Phone or Name" />
                 </div>
 
             </LayoutHeaderContext>
@@ -40,10 +57,10 @@ function Search() {
                 {
                     !searching ? (
                         listUsers.length !== 0 ? (
-                            <>list</>
-                        ) : (
-                            <div className="search-for-conversation">Search User</div>
-                        )
+                            listUsers.map((user) => <SearchListMessages key={user.id_user} item={user} />)
+                        ) : searchText !== ''
+                            ? <div className="search-for-conversation">Nothing Found ..</div>
+                            : <div className="search-for-conversation">Search User</div>
                     ) : (
                         SkeletonLoading()
                     )
