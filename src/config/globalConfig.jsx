@@ -19,10 +19,12 @@ export const config = {
         "app_key": "way_app_key",
         "app_id": "way_app_id",
         "private_message_hook": "private-new_messages.id_message_hook.",
+        "private_user_hook": "private-user.",
         "events": {
             "new_message": "new_messages",
+            "new_conversations": "new_conversations",
             "user_start_typing": "client-typing",
-            "user_end_typing": "client-end-typing"
+            "user_end_typing": "client-end-typing",
         },
         "time_send_typing": 7000,
         "time_send_end_typing": 10000,

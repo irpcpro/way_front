@@ -11,8 +11,8 @@ const FooterNav = () => {
 
     return (
         <div className="footer-nav">
-            <div className="icon-nav setting"></div>
-            <div className="icon-nav add"></div>
+            {/*<div className="icon-nav setting"></div>*/}
+            {/*<div className="icon-nav add"></div>*/}
             <div onClick={handleSearch} className="icon-nav search"></div>
         </div>
     )

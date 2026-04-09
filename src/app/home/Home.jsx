@@ -10,14 +10,32 @@ import {useCallback, useEffect, useRef, useState} from "react";
 import GetListMessagesApi from "../../api/GetListMessagesApi.jsx";
 import toast from "react-hot-toast";
 import HomeListMessages from "./HomeListMessages.jsx";
-import { subscribeMessageHooks } from "../websocket/subscribeChats.jsx";
+import { subscribeMessageHooks, subscribeUserHooks } from "../websocket/subscribeChats.jsx";
 import {config} from "../../config/globalConfig.jsx";
+import {getUser} from "../utils/storage.jsx";
 
 function Home() {
     const [listMessages, setListMessages] = useState([]);
     const [listMessagesLoading, setListMessagesLoading] = useState(true);
     const subscribedRef = useRef(false);
+    const userChannelSubscribedRef = useRef(false);
     const [usersTyping, setUsersTyping] = useState([]);
+    const [currentUser, setCurrentUser] = useState(null);
+
+    useEffect(() => {
+        setCurrentUser(getUser())
+    }, []);
+
+
+    const listEventsNewMessage = [
+        config.websocket.events.new_message,
+        config.websocket.events.user_start_typing,
+        config.websocket.events.user_end_typing
+    ];
+
+    let listEventsNewConversation = [
+        config.websocket.events.new_conversations
+    ];
 
     const getMessages = () => {
         GetListMessagesApi.getListMessages().then((response) => {
@@ -89,17 +107,36 @@ function Home() {
 
         subscribedRef.current = true;
 
-        let listEvents = [
-            config.websocket.events.new_message,
-            config.websocket.events.user_start_typing,
-            config.websocket.events.user_end_typing
-        ];
-
         const hooks = listMessages.map(item => item.message.id_message_hook);
 
-        subscribeMessageHooks(hooks, onMessageReceiveMapper, listEvents);
+        subscribeMessageHooks(hooks, onMessageReceiveMapper, listEventsNewMessage);
     }, [listMessages]);
 
+
+    const onSocketNewConversation = (newMsg) => {
+        // add to chat lists
+        onSocketNewMessage(newMsg);
+        // subscribe single chat
+        subscribeMessageHooks([newMsg.message.id_message_hook], onMessageReceiveMapper, listEventsNewMessage);
+    }
+
+    const onUserChannelReceiveMapper = (newMsg) => {
+        switch (newMsg.event) {
+            case config.websocket.events.new_conversations:
+                onSocketNewConversation(newMsg.data);
+                break;
+        }
+    }
+
+    // subscribe to user broadcast
+    useEffect(() => {
+        if(!currentUser || !currentUser.uuid) return;
+        if (userChannelSubscribedRef.current) return;
+
+        userChannelSubscribedRef.current = true;
+
+        subscribeUserHooks(currentUser.uuid, onUserChannelReceiveMapper, listEventsNewConversation);
+    }, [currentUser]);
 
 
     const SkeletonLoading = () => (

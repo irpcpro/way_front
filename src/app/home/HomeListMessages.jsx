@@ -10,13 +10,12 @@ const HomeListMessages = ({item, userTyping = null}) => {
         navigate(config.routes.message + '/' + item.message?.id_message_hook)
     }
 
-    console.log('userTypinguserTyping', userTyping)
 
     return (
         <div onClick={seeMessage} className="message-item">
             <div className="left">
                 <div className="avatar">
-                    {item.user.avatar && (<img src={item.user.avatar} alt=""/>)}
+                    {item.user.avatar && (<img src={item.user.avatar.url} alt=""/>)}
                 </div>
             </div>
             <div className="right">
