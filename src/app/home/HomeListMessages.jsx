@@ -7,7 +7,7 @@ const HomeListMessages = ({item, userTyping = null}) => {
 
     const seeMessage = () => {
         // navigate(config.routes.message, item.message.id_message)
-        navigate(config.routes.message + '/' + item.message.id_message_hook)
+        navigate(config.routes.message + '/' + item.message?.id_message_hook)
     }
 
     console.log('userTypinguserTyping', userTyping)

@@ -122,8 +122,8 @@ function Home() {
                         listMessages.length?(
                             listMessages.map((item) => (
                                 <HomeListMessages
-                                    userTyping={usersTyping.find(usrTyp => usrTyp.id_message_hook === item.message.id_message_hook)}
-                                    key={item.message.id_message}
+                                    userTyping={usersTyping.find(usrTyp => usrTyp.id_message_hook === item.message?.id_message_hook)}
+                                    key={item.message !== null? item.message?.id_message : ''}
                                     item={item}
                                 />
                             ))
