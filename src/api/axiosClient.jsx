@@ -41,7 +41,7 @@ axiosClient.interceptors.response.use(
                 return
             }
 
-            if(error.status !== 400 && error.status !== 500)
+            if(error.status !== 400 && error.status !== 500 && error.status !== 422)
                 toast.error('Unexpected Error');
             return Promise.reject({
                 status: false,

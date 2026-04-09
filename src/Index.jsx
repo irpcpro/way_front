@@ -16,6 +16,8 @@ import MessagePage from "./app/message/MessagePage.jsx";
 import useWebSocketInit from "./app/websocket/useWebSocketInit.jsx";
 import Search from "./app/Search/Search.jsx";
 import NewConversationPage from "./app/new-conversation/NewConversationPage.jsx";
+import Setting from "./app/setting/Setting.jsx";
+import EditProfile from "./app/setting/EditProfile.jsx";
 
 function Index() {
     useWebSocketInit();
@@ -38,6 +40,8 @@ function Index() {
                     <Route path={`${config.routes.message}/:id`} element={<MessagePage />} />
                     <Route path={config.routes.search} element={<Search />} />
                     <Route path={`${config.routes.new_conversation}/:user_id`} element={<NewConversationPage />} />
+                    <Route path={config.routes.setting} element={<Setting />} />
+                    <Route path={config.routes.edit_profile} element={<EditProfile />} />
                 </Route>
 
                 <Route path="*" element={<NotFound />} />

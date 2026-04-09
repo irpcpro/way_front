@@ -1,0 +1,41 @@
+.setting-footer {
+    color: #888;
+    font: 0.7rem Tahoma, sans-serif;
+    text-align: center;
+    padding: 9px 0;
+}
+.setting-unordered-list {
+    margin-top: 10px;
+    padding: 5px;
+}
+.setting-unordered-list li {
+    padding: 15px 13px;
+    font: 0.9rem Tahoma, sans-serif;
+    cursor: pointer;
+}
+.setting-unordered-list li:hover {
+    background: #f6f6f6;
+}
+.setting-logout-link {
+    color: #F12656;
+}
+.setting-avatar {
+    background: url("../../assets/images/avatar-2.svg") center bottom/80% 80% no-repeat #fff;
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 100%;
+    border: 4px solid #7E6AFD;
+    margin: 10px auto;
+}
+.setting-user-name {
+    color: #435364;
+    font: 1.3rem Tahoma, sans-serif;
+    text-align: center;
+}
+.setting-small-title {
+    font: 0.7rem Tahoma, sans-serif;
+    color: #888;
+    margin-left: 4px;
+    letter-spacing: 1px;
+}

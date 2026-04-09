@@ -17,6 +17,7 @@ import {subscribeMessageHooks, WSSendEvent} from "../websocket/subscribeChats.js
 import { v4 as uuid4 } from "uuid";
 import WS from "../websocket/WebSocketService.jsx";
 import {getUser} from "../utils/storage.jsx";
+import ArrowBack from "../components/ArrowBack.jsx";
 
 function MessagePage(callback, deps) {
     const MessageID = useParams().id;
@@ -266,7 +267,7 @@ function MessagePage(callback, deps) {
                 <div className="chat-detail" onClick={() =>{
                     listTextsRef.current.scrollTop = listTextsRef.current.scrollHeight;
                 }}>
-                    <div className="arrow-back" onClick={() => navigate(-1)}></div>
+                    <ArrowBack />
                     <div className="bg-image">
                         <div className={`avatar ${messageLoading && 's-loading'}`}>
                             {(!messageLoading && messageDetails?.members[0].avatar) && <img src={messageDetails.members[0].avatar.url} alt="avatar" />}

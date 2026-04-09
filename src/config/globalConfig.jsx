@@ -1,7 +1,10 @@
 export const config = {
+    "app_version": import.meta.env.VITE_APP_VERSION,
     "routes": {
         "home": "/",
         "search": "/search",
+        "setting": "/setting",
+        "edit_profile": "/edit_profile",
         "login": "/login",
         "message": "/message",
         "new_conversation": "/new_conversation",

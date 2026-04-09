@@ -9,9 +9,13 @@ const FooterNav = () => {
         navigate(config.routes.search)
     }
 
+    const handleSetting = () => {
+        navigate(config.routes.setting)
+    }
+
     return (
         <div className="footer-nav">
-            {/*<div className="icon-nav setting"></div>*/}
+            <div onClick={handleSetting} className="icon-nav setting"></div>
             {/*<div className="icon-nav add"></div>*/}
             <div onClick={handleSearch} className="icon-nav search"></div>
         </div>

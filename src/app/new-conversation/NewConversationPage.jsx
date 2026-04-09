@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 import SendMessageApi from "../../api/SendMessageApi.jsx";
 import SpinnerLoading from "../components/Spinner.jsx";
 import {config} from "../../config/globalConfig.jsx";
+import ArrowBack from "../components/ArrowBack.jsx";
 
 function NewConversationPage() {
     const navigate = useNavigate();
@@ -52,7 +53,7 @@ function NewConversationPage() {
         <LayoutMainContext>
             <LayoutHeaderContext>
                 <div className="chat-detail">
-                    <div className="arrow-back" onClick={() => navigate(-1)}></div>
+                    <ArrowBack />
                     <div className="bg-image">
                         <div className={`avatar ${chatLoading && 's-loading'}`}>
                             {(!chatLoading && user && user.avatar && user.avatar.url) && <img src={user.avatar.url} alt="avatar" />}

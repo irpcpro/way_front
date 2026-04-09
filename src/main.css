@@ -354,3 +354,20 @@ html, body, #root {
 .s-loading {
     animation: skeleton 1.5s infinite linear;
 }
+.arrow-back {
+    background: url("assets/images/arrow-left.svg") center center/8px 14px no-repeat;
+    width: 25px;
+    height: 30px;
+    cursor: pointer;
+}
+.header-row {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: row;
+}
+.header-row .title {
+    color: #fff;
+    font: 0.9rem Tahoma, sans-serif;
+    padding: 0 5px;
+}

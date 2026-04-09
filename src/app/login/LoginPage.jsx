@@ -57,8 +57,8 @@ function LoginPage() {
             setTimer(res.data.expires_in);
             setTimeout(() => otpInputsRef.current[0]?.focus(), 300);
         }).catch((err) => {
-            toast.error('Server error')
-            showInlineError('Error on Sending code');
+            toast.error(err.message ?? 'Server error')
+            showInlineError(err.message ?? 'Error on Sending code');
         }).finally(() => {
             setLoading(false);
         });

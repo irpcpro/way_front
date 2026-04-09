@@ -1,12 +1,12 @@
 .list-install-prompt {
-    font: 1.1rem "DanaNum";
-    text-align: right;
+    font: 1.1rem Tahoma;
+    text-align: left;
     margin: 0;
     padding: 0;
 }
 .list-install-prompt li {
     margin: 5px 0;
-    font: 1rem "DanaNum";
+    font: 1rem Tahoma;
 }
 .icon-add-to-home {
     display: inline-block;

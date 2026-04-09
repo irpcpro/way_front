@@ -39,9 +39,9 @@ const InstallAppPrompt = () => {
 
         deferredPrompt.userChoice.then((choiceResult) => {
             if (choiceResult.outcome === "accepted") {
-                console.log("کاربر اپلیکیشن را نصب کرد");
+                console.log("user installed application");
             } else {
-                console.log("کاربر نصب را رد کرد");
+                console.log("user did npt install application");
             }
             setDeferredPrompt(null);
         });
@@ -78,22 +78,20 @@ const InstallAppPrompt = () => {
 
                 {/* عنوان */}
                 <Typography variant="h6" fontWeight="bold" gutterBottom>
-                    <span className="font-dana-light">نصب اپلیکیشن</span>
+                    <span className="font-dana-light">Install Application</span>
                 </Typography>
 
                 {/* توضیحات */}
                 <div style={{color: "#676767", fontSize:"0.9rem"}}>
-                    <p className="font-dana-light">برای دسترسی سریع‌تر و تجربه بهتر، اپلیکیشن رو روی گوشی‌تون نصب کنید.</p>
+                    <p className="font-dana-light">For having the best user experience, install the application</p>
                     <ul className="list-install-prompt">
-                        <li>1) در کنار نوار آدرس بالا روی گزینه <i className="bi bi-three-dots-vertical"></i>کلیک کنید</li>
-                        <li>2) بعد گزینه <span className="en-helper">Add to Home Screen</span>
-                            <div className="icon-add-to-home"><i className="bi bi-display"><i
-                                className="bi bi-arrow-down-short"></i></i></div>
-                            را
-                            بزنید
+                        <li>1) click the icon <i className="bi bi-three-dots-vertical"></i> next to url address bar</li>
+                        <li>2) then click <span className="en-helper">Add to Home Screen</span>
+                            <div className="icon-add-to-home"><i className="bi bi-display"><i className="bi bi-arrow-down-short"></i></i></div>
+                            to install
                         </li>
-                        <li>3) و گزینه Install را زده</li>
-                        <li>4) و دکمه Add را بزنید</li>
+                        <li>3) Then press "Install"</li>
+                        <li>4) Then press "Add"</li>
                     </ul>
                 </div>
 
@@ -109,7 +107,7 @@ const InstallAppPrompt = () => {
                     sx={{ mb: 2, borderRadius: 3, py: 1.5 }}
                     startIcon={<i style={{marginLeft:"10px", fontSize:"0.9rem"}} className="bi bi-download"></i>}
                 >
-                نصب اپلیکیشن
+                Install Application
                 </Button>
 
                 {/* دکمه بی‌خیال */}
@@ -119,7 +117,7 @@ const InstallAppPrompt = () => {
                     onClick={handleDismiss}
                     className="not-now"
                 >
-                    فعلاً بی‌خیال
+                    Not now
                 </Button>
             </Box>
         </SwipeableDrawer>
