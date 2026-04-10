@@ -1,0 +1,126 @@
+.edit-profile-container {
+
+}
+.edit-profile-container .bg-form {
+    padding: 10px 15px;
+}
+.edit-profile-container .bg-forms {
+    margin-bottom: 15px;
+}
+.edit-profile-container label {
+    font: 0.8rem Tahoma, sans-serif;
+    color: #485868;
+}
+.edit-profile-container label span {
+    font: 0.6rem Tahoma, sans-serif;
+    color: #5d6d7c;
+}
+.edit-profile-container .full-name {
+    font: 1.3rem Tahoma, sans-serif;
+    text-align: center;
+    color: #485868;
+    width: 90%;
+    margin: 10px auto 15px;
+    word-wrap: break-word;
+}
+.edit-profile-container .error-text {
+    color: #EC2B59;
+    font: 0.7rem Tahoma, sans-serif;
+    margin-top: 7px;
+}
+input.edit-profile-textbox {
+    background: #F0F0FB;
+    border-radius: 4px;
+    width: 100%;
+    font: 0.9rem Tahoma, sans-serif;
+    padding: 9px 10px 12px;
+}
+input.edit-profile-textbox:focus {
+    outline: none;
+    border-color: #4d90fe;
+    box-shadow: none;
+}
+button.edit-profile-submit {
+    background: #8472FC;
+    text-align: center;
+    font: 1rem Tahoma, sans-serif;
+    color: #fff;
+    width: 100%;
+    padding: 10px 15px 13px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+button.edit-profile-submit.error {
+    background: #d6d1ff !important;
+    cursor: not-allowed;
+}
+button.edit-profile-submit:hover {
+    background: #9584ff;
+}
+.edit-profile-container .bg-forms .bg-gender {
+    display: flex;
+    justify-content: start;
+    flex-direction: row;
+    gap: 15px;
+}
+.edit-profile-container .bg-forms .bg-gender .gender-item {
+    display: flex;
+    justify-content: start;
+    flex-direction: column;
+    cursor: pointer;
+}
+.edit-profile-container .bg-forms .bg-gender .gender-item .bg-icon {
+    width: 55px;
+    height: 55px;
+    background-position: center;
+    border: 1px solid #B6B9C3;
+    background-repeat: no-repeat;
+    background-color: #fff;
+    background-size: 30px;
+    border-radius: 15px;
+}
+.edit-profile-container .bg-forms .bg-gender .gender-item.selected .bg-icon {
+    background-color: #8472FC;
+    border-color: #8472FC;
+}
+.edit-profile-container .bg-forms .bg-gender .gender-item .bg-title {
+    text-align: center;
+    color: #9a9dad;
+    font: 0.8rem Tahoma, sans-serif;
+    margin-top: 3px;
+}
+.edit-profile-container .bg-forms .bg-gender .gender-item .bg-icon.man {
+    background-image: url("../../assets/images/man-dark.svg");
+}
+.edit-profile-container .bg-forms .bg-gender .gender-item .bg-icon.woman {
+    background-image: url("../../assets/images/woman-dark.svg");
+}
+.edit-profile-container .bg-forms .bg-gender .gender-item.selected .bg-icon.man {
+    background-image: url("../../assets/images/man-light.svg");
+}
+.edit-profile-container .bg-forms .bg-gender .gender-item.selected .bg-icon.woman {
+    background-image: url("../../assets/images/woman-light.svg");
+}
+.edit-profile-container .bg-forms .bg-gender .gender-item.selected .bg-title {
+    color: #8472FC;
+}
+.username-ok {
+    background: url("../../assets/images/tick-green.svg") no-repeat center center/100% 100%;
+    width: 12px;
+    height: 10px;
+    margin-top: 5px;
+}
+.circle-loading.checking-username {
+    clear: both;
+    margin-top: 4px;
+    justify-content: start;
+}
+.username-situation {
+    display: flex;
+    gap: 5px;
+}
+.username-situation span {
+    font: 0.8rem Tahoma, sans-serif;
+    color: #1fc54c;
+    margin-top: 3px;
+}

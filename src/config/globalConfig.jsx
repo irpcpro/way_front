@@ -41,6 +41,10 @@ export const config = {
             "sending": "sending",
             "failed": "failed",
             "sent": "sent"
+        },
+        "gender": {
+            "man": "man",
+            "woman": "woman",
         }
     }
 }

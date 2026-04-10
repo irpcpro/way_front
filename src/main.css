@@ -70,6 +70,9 @@ html, body, #root {
     flex-direction: column;
     text-align: center;
 }
+.spinner-bg.faded {
+    background: rgba(255,255,255,0.6);
+}
 .spinner-bg .spinner-border {
     margin: 0 auto;
 }
