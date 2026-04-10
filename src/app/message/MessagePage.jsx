@@ -110,7 +110,7 @@ function MessagePage(callback, deps) {
         setSeeImageAttachment(null)
     }
 
-    const onSendMessageHandle = (msg) => {
+    const onSendMessageHandle = (msg, messageType) => {
         const clientId = uuid4();
 
         // پیام skeleton
@@ -135,7 +135,7 @@ function MessagePage(callback, deps) {
             context: msg,
             uuid: clientId,
             id_message_hook: MessageID,
-            type: config.enum.message_type.text,
+            type: messageType,
             client_id: clientId,
         }).catch(() => {
             // در صورت خطا وضعیت رو update کن

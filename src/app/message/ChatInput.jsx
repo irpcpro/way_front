@@ -1,9 +1,11 @@
 import "./ChatInput.css"
-import {useState} from "react";
+import {useRef, useState} from "react";
+import {config} from "../../config/globalConfig.jsx";
 
 function ChatInput ({onSendHandle, onTyping}) {
     const [value, setValue] = useState('');
     const [activeSendBtn, setActiveSendBtn] = useState(false);
+    const fileInputRef = useRef(null);
 
     const handleChange = (e) => {
         const textarea = e.target;
@@ -26,9 +28,23 @@ function ChatInput ({onSendHandle, onTyping}) {
 
     const sendMsg = () => {
         if(!activeSendBtn) return
-        onSendHandle(value)
+        onSendHandle(value, config.enum.message_type.text)
         setActiveSendBtn(false);
         setValue('')
+    }
+
+    const handleAttachClick = () => {
+        fileInputRef.current?.click();
+    }
+
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        console.log('file',file)
+        return;
+        if (file) {
+            onSendHandle(file, config.enum.message_type.attachment);
+        }
+        e.target.value = "";
     }
 
     return (
@@ -47,7 +63,14 @@ function ChatInput ({onSendHandle, onTyping}) {
                 />
             </div>
             <div className="btns">
-                {/*<div className={`attach-btn`}></div>*/}
+                <input
+                    type="file"
+                    ref={fileInputRef}
+                    style={{display: "none"}}
+                    accept="image/*,video/*,*/*"
+                    onChange={handleFileChange}
+                />
+                <div onClick={handleAttachClick} className={`attach-btn`}></div>
                 <div onClick={sendMsg} className={`send-btn ${activeSendBtn && 'active'}`}></div>
             </div>
         </div>
