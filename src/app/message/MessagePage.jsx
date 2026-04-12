@@ -20,7 +20,7 @@ import {getUser} from "../utils/storage.jsx";
 import ArrowBack from "../components/ArrowBack.jsx";
 
 function MessagePage(callback, deps) {
-    const MessageID = useParams().id;
+    const MessageID = Number(useParams().id);
     const navigate = useNavigate();
     const [page, setPage] = useState(1);
     const [loadingMore, setLoadingMore] = useState(false);
@@ -43,6 +43,13 @@ function MessagePage(callback, deps) {
     useEffect(() => {
         setCurrentUser(getUser())
     }, []);
+
+    const scrollToBottomChat = () => {
+        listTextsRef.current.scrollTo({
+            top: listTextsRef.current.scrollHeight,
+            behavior: 'smooth'
+        });
+    }
 
     const loadMoreMessages = () => {
         if (!listTextsRef.current) return;
@@ -110,7 +117,7 @@ function MessagePage(callback, deps) {
         setSeeImageAttachment(null)
     }
 
-    const onSendMessageHandle = (msg, messageType) => {
+    const onSendMessageHandle = (msg, attachmentID = null, callbackSuccess = null, callbackFailed = null) => {
         const clientId = uuid4();
 
         // پیام skeleton
@@ -130,13 +137,24 @@ function MessagePage(callback, deps) {
             chats: [...prev.chats, optimisticMsg]
         }));
 
-        // ارسال پیام
-        SendMessageApi.send({
+        let messageType = attachmentID !== null
+            ? config.enum.message_type.attachment
+            : config.enum.message_type.text;
+
+        let data = {
             context: msg,
             uuid: clientId,
             id_message_hook: MessageID,
             type: messageType,
             client_id: clientId,
+        }
+
+        if(attachmentID !== null)
+            data.id_attachment = attachmentID;
+
+        // ارسال پیام
+        SendMessageApi.send(data).then(() => {
+            callbackSuccess?.();
         }).catch(() => {
             // در صورت خطا وضعیت رو update کن
             setMessageDetails(prev => ({
@@ -147,6 +165,7 @@ function MessagePage(callback, deps) {
                         : item
                 )
             }));
+            callbackFailed?.()
         });
     };
 
@@ -353,6 +372,7 @@ function MessagePage(callback, deps) {
                     onSendHandle={onSendMessageHandle}
                     onTyping={sendTypingSignal}
                     MessageID={MessageID}
+                    scrollChat={scrollToBottomChat}
                 />
             </LayoutFooterContext>
         </LayoutMainContext>

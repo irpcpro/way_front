@@ -54,3 +54,50 @@
 .bg-chat-text .btns .attach-btn:hover {
     background: url("../../assets/images/picture-icon-color2.svg") center center/23px 17px no-repeat;
 }
+.image-preview-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 80px;
+    overflow: hidden;
+    position: relative;
+    margin: 10px;
+    border: 3px solid #8472FC;
+    border-radius: 12px;
+}
+.image-preview-container .cancel {
+    background: url("../../assets/images/cancel.svg") center center/10px 10px no-repeat #8472FC;
+    width: 19px;
+    height: 19px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 100%;
+    cursor: pointer;
+    z-index: 5;
+}
+.image-preview-container .attachment-uploading {
+    z-index: 2;
+    background: rgba(0,0,0,0.5);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    text-align: center;
+    align-content: center;
+}
+.image-preview-container .attachment-uploading .spinner-border {
+    color: #fff;
+    width: 20px;
+    height: 20px;
+    font-size: 0.8rem;
+}
+.image-preview-container .image-preview {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
