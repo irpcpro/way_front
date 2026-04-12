@@ -352,6 +352,7 @@ function MessagePage(callback, deps) {
                 <ChatInput
                     onSendHandle={onSendMessageHandle}
                     onTyping={sendTypingSignal}
+                    MessageID={MessageID}
                 />
             </LayoutFooterContext>
         </LayoutMainContext>

@@ -1,8 +1,10 @@
 import "./ChatInput.css"
 import {useRef, useState} from "react";
 import {config} from "../../config/globalConfig.jsx";
+import SendMessageApi from "../../api/SendMessageApi.jsx";
+import toast from "react-hot-toast";
 
-function ChatInput ({onSendHandle, onTyping}) {
+function ChatInput ({onSendHandle, onTyping, MessageID}) {
     const [value, setValue] = useState('');
     const [activeSendBtn, setActiveSendBtn] = useState(false);
     const fileInputRef = useRef(null);
@@ -37,15 +39,25 @@ function ChatInput ({onSendHandle, onTyping}) {
         fileInputRef.current?.click();
     }
 
-    const handleFileChange = (e) => {
+    const handleFileChange = async (e) => {
         const file = e.target.files[0];
-        console.log('file',file)
-        return;
-        if (file) {
-            onSendHandle(file, config.enum.message_type.attachment);
-        }
+        console.log('file', file)
+
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append("attachment", file);
+
+        await SendMessageApi.attachment(formData, MessageID).then((res) => {
+
+        }).catch((err) => {
+            toast.error(err.message ?? 'Server error')
+        }).finally(() => {
+
+        });
+
         e.target.value = "";
-    }
+    };
 
     return (
         <div className="bg-chat-text">
