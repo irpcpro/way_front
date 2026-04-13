@@ -43,7 +43,7 @@ function ChatInput ({onSendHandle, onTyping, MessageID, scrollChat}) {
     }
 
     const sendMsg = () => {
-        if(!activeSendBtn) return
+        if(!activeSendBtn && !attachmentID) return;
 
         onSendHandle(value, attachmentID, msgSentSuccessfully, cancelAttachment)
         setActiveSendBtn(false);
@@ -113,7 +113,7 @@ function ChatInput ({onSendHandle, onTyping, MessageID, scrollChat}) {
                         onChange={handleFileChange}
                     />
                     <div onClick={handleAttachClick} className={`attach-btn`}></div>
-                    <div onClick={sendMsg} className={`send-btn ${activeSendBtn && 'active'}`}></div>
+                    <div onClick={sendMsg} className={`send-btn ${(activeSendBtn || attachmentID) && 'active'}`}></div>
                 </div>
             </div>
         </>

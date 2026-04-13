@@ -55,8 +55,8 @@ function MessageContext({message, user, setSeeImageAttachment, status}) {
                                 <img
                                     onClick={()=>{setSeeImageAttachment(message)}}
                                     className="message-attachment"
-                                    src={message.attachment.url}
-                                    alt={message.attachment.name}
+                                    src={message.attachment?.url}
+                                    alt={message.attachment?.name}
                                 />
                             )
                         }
