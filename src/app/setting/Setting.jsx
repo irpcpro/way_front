@@ -9,6 +9,7 @@ import {AuthContext} from "../context/AuthContext.jsx";
 import {getUser} from "../utils/storage.jsx";
 import {useNavigate} from "react-router-dom";
 import ArrowBack from "../components/ArrowBack.jsx";
+import FooterNav from "../components/FooterNav.jsx";
 
 function Setting() {
     const { logout } = useContext(AuthContext);
@@ -49,6 +50,7 @@ function Setting() {
             </LayoutContentContext>
             <LayoutFooterContext>
                 <div className="setting-footer">Copyright © 2026 | version:{config.app_version}</div>
+                <FooterNav />
             </LayoutFooterContext>
         </LayoutMainContext>
     )

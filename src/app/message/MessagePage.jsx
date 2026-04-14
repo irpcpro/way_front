@@ -40,6 +40,8 @@ function MessagePage(callback, deps) {
 
     const [currentUser, setCurrentUser] = useState(null);
 
+    const [showScrollDownButton, setShowScrollDownButton] = useState(false);
+
     useEffect(() => {
         setCurrentUser(getUser())
     }, []);
@@ -280,6 +282,35 @@ function MessagePage(callback, deps) {
         }, config.websocket.time_send_end_typing);
     };
 
+    const handleScroll = () => {
+        if (listTextsRef.current) {
+            const { scrollTop, scrollHeight, clientHeight } = listTextsRef.current;
+            if (scrollTop + clientHeight < scrollHeight - 300) {
+                setShowScrollDownButton(true);
+            } else {
+                setShowScrollDownButton(false);
+            }
+        }
+    };
+    const scrollToBottom = () => {
+        if (listTextsRef.current) {
+            listTextsRef.current.scrollTo({
+                top: listTextsRef.current.scrollHeight,
+                behavior: 'smooth'
+            });
+            setShowScrollDownButton(false);
+        }
+    };
+    useEffect(() => {
+        const currentListTextsRef = listTextsRef.current;
+        if (currentListTextsRef) {
+            currentListTextsRef.addEventListener('scroll', handleScroll);
+            return () => {
+                currentListTextsRef.removeEventListener('scroll', handleScroll);
+            };
+        }
+    }, [listTextsRef.current]);
+
     return (
         <LayoutMainContext>
             <LayoutHeaderContext>
@@ -344,6 +375,11 @@ function MessagePage(callback, deps) {
                                             </div>
                                         )
                                     }
+
+                                    {showScrollDownButton && (
+                                        <div onClick={scrollToBottom} className="go-bottom"></div>
+                                    )}
+
                                 </div>
                             )
                             : <div className="chat-no-msg"></div>

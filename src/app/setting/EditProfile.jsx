@@ -10,6 +10,7 @@ import {config} from "../../config/globalConfig.jsx";
 import UserEditProfileApi from "../../api/UserEditProfileApi.jsx";
 import toast from "react-hot-toast";
 import SpinnerLoading from "../components/Spinner.jsx";
+import FooterNav from "../components/FooterNav.jsx";
 
 
 function EditProfile(){
@@ -217,7 +218,7 @@ function EditProfile(){
                 }
             </LayoutContentContext>
             <LayoutFooterContext>
-
+                <FooterNav />
             </LayoutFooterContext>
         </LayoutMainContext>
     );

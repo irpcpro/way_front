@@ -15,9 +15,12 @@
     background-repeat: no-repeat;
 }
 .icon-nav.add {
-    background-color: #8472FC;
     background-image: url("../../assets/images/plus.svg");
-    background-size: 16px 16px;
+    background-size: 20px 20px;
+}
+.icon-nav.home {
+    background-image: url("../../assets/images/home.svg");
+    background-size: 20px 20px;
 }
 .icon-nav.setting {
     background-size: 20px 20px;
@@ -26,4 +29,21 @@
 .icon-nav.search {
     background-size: 20px 20px;
     background-image: url("../../assets/images/search.svg");
+}
+
+.icon-nav.add.selected {
+    background-image: url("../../assets/images/plus-selected.svg");
+}
+.icon-nav.home.selected {
+    background-image: url("../../assets/images/home-selected.svg");
+}
+.icon-nav.setting.selected {
+    background-image: url("../../assets/images/gear-selected.svg");
+}
+.icon-nav.search.selected {
+    background-image: url("../../assets/images/search-selected.svg");
+}
+.icon-nav.selected {
+    background-size: 16px 16px !important;
+    background-color: #8472FC !important;
 }
