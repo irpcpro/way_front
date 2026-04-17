@@ -45,6 +45,7 @@ function Setting() {
                 <ul className="setting-unordered-list">
                     <h6 className="setting-small-title">SETTING</h6>
                     <li onClick={handleEditProfile}>Edit Profile</li>
+                    <li onClick="">Versions</li>
                     <li onClick={handleLogout} className="setting-logout-link">Logout</li>
                 </ul>
             </LayoutContentContext>

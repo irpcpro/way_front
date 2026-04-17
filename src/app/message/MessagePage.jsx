@@ -18,6 +18,7 @@ import { v4 as uuid4 } from "uuid";
 import WS from "../websocket/WebSocketService.jsx";
 import {getUser} from "../utils/storage.jsx";
 import ArrowBack from "../components/ArrowBack.jsx";
+import UserInfo from "../user/UserInfo.jsx";
 
 function MessagePage(callback, deps) {
     const MessageID = Number(useParams().id);
@@ -41,6 +42,9 @@ function MessagePage(callback, deps) {
     const [currentUser, setCurrentUser] = useState(null);
 
     const [showScrollDownButton, setShowScrollDownButton] = useState(false);
+
+    const [chatType, setChatType] = useState(null);
+    const [chatMembers, setChatMembers] = useState([]);
 
     useEffect(() => {
         setCurrentUser(getUser())
@@ -74,6 +78,8 @@ function MessagePage(callback, deps) {
                 .then((response) => {
                     if (page === 1) {
                         setMessageDetails(response.data);
+                        setChatType(response.data.type)
+                        setChatMembers(response.data.members)
                     } else {
                         setMessageDetails(prev => ({
                             ...response.data,
@@ -311,8 +317,15 @@ function MessagePage(callback, deps) {
         }
     }, [listTextsRef.current]);
 
+    function handleSeeChatInfo(){
+
+    }
+
     return (
         <LayoutMainContext>
+
+            <UserInfo />
+
             <LayoutHeaderContext>
                 <div className="chat-detail" onClick={() =>{
                     listTextsRef.current.scrollTop = listTextsRef.current.scrollHeight;
@@ -323,7 +336,7 @@ function MessagePage(callback, deps) {
                             {(!messageLoading && messageDetails?.members[0].avatar) && <img src={messageDetails.members[0].avatar.url} alt="avatar" />}
                         </div>
                     </div>
-                    <div className="bg-name">
+                    <div onClick={handleSeeChatInfo} className="bg-name">
                         {!messageLoading ? messageDetails?.members[0].name??'Unknown' : <SMessageName />}
                     </div>
                 </div>
@@ -335,7 +348,7 @@ function MessagePage(callback, deps) {
                         <div onClick={closeAttachment} className="bg-dark-attachment"></div>
                         <div className="bg-see-image">
                             <img src={seeImageAttachment.attachment.url} alt=""/>
-                            <a href={seeImageAttachment.attachment.url} download>
+                            <a href={seeImageAttachment.attachment.url} target="_blank" download="download">
                                 <div className="bi bi-download download-attachment"></div>
                             </a>
                         </div>

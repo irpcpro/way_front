@@ -42,6 +42,10 @@ export const config = {
             "failed": "failed",
             "sent": "sent"
         },
+        "chat_type": {
+            "private": 1,
+            "group": 2,
+        },
         "gender": {
             "man": "man",
             "woman": "woman",
