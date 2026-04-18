@@ -18,7 +18,7 @@ import { v4 as uuid4 } from "uuid";
 import WS from "../websocket/WebSocketService.jsx";
 import {getUser} from "../utils/storage.jsx";
 import ArrowBack from "../components/ArrowBack.jsx";
-import UserInfo from "../user/UserInfo.jsx";
+import UserInfo from "../chat-info/UserInfo.jsx";
 
 function MessagePage(callback, deps) {
     const MessageID = Number(useParams().id);
@@ -45,6 +45,8 @@ function MessagePage(callback, deps) {
 
     const [chatType, setChatType] = useState(null);
     const [chatMembers, setChatMembers] = useState([]);
+
+    const [openChatInfo, setOpenChatInfo] = useState(false);
 
     useEffect(() => {
         setCurrentUser(getUser())
@@ -318,20 +320,24 @@ function MessagePage(callback, deps) {
     }, [listTextsRef.current]);
 
     function handleSeeChatInfo(){
-
+        setOpenChatInfo(true)
     }
 
     return (
         <LayoutMainContext>
-
-            <UserInfo />
-
+            {
+                openChatInfo && (
+                    chatType === config.enum.chat_type.private
+                        ? <UserInfo user={chatMembers} setOpenChatInfo={setOpenChatInfo} />
+                        : <></>
+                )
+            }
             <LayoutHeaderContext>
                 <div className="chat-detail" onClick={() =>{
                     listTextsRef.current.scrollTop = listTextsRef.current.scrollHeight;
                 }}>
                     <ArrowBack />
-                    <div className="bg-image">
+                    <div onClick={handleSeeChatInfo} className="bg-image">
                         <div className={`avatar ${messageLoading && 's-loading'}`}>
                             {(!messageLoading && messageDetails?.members[0].avatar) && <img src={messageDetails.members[0].avatar.url} alt="avatar" />}
                         </div>

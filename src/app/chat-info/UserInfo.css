@@ -1,0 +1,52 @@
+.bg-user-info {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    z-index: 100090;
+}
+.user-info {
+    display: flex;
+    justify-content: start;
+    flex-direction: row;
+    padding: 10px 15px;
+}
+.user-info .bg-image .avatar {
+    width: 100px;
+    height: 100px;
+}
+.user-info .bg-details {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 10px;
+}
+.user-info .bg-details .name {
+    font: 1.4rem Tahoma;
+}
+.online-status {
+    display: flex;
+    justify-content: start;
+    flex-direction: row;
+    align-items: center;
+}
+.online-status .online-text {
+    color: #ccc;
+    font: 0.8rem Tahoma;
+}
+.online-status .online-circle {
+    width: 10px;
+    margin-right: 5px;
+    height: 10px;
+    background-color: #ccc;
+    border-radius: 100%;
+}
+.online-status.online .online-circle {
+    background-color: #1FC54C;
+}
+.online-status.online .online-text {
+    color: #1FC54C;
+}

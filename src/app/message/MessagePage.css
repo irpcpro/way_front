@@ -13,6 +13,7 @@
 }
 .chat-detail .bg-image {
     margin-left: 5px;
+    cursor: pointer;
 }
 .chat-detail .bg-image .avatar {
     overflow: hidden;
@@ -20,6 +21,7 @@
 .chat-detail .bg-name {
     font: 1rem Arial, Helvetica, sans-serif;
     color: #fff;
+    cursor: pointer;
     margin-left: 10px;
 }
 .avatar-loading {
