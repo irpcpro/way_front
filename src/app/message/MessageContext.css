@@ -17,7 +17,8 @@
 .msg .bg-msg .bg-text {
     padding: 3px 9px 4px;
     background: #F0F0FB;
-    color: #495969;
+    color: #281e6c;
+
     border-radius: 8px 8px 8px 0;
     word-wrap: break-word;
 }
@@ -31,11 +32,11 @@
 }
 .msg.me .message-det {
     color: #B6B9C3;
-    font: 0.7rem Arial, Helvetica, sans-serif;
+    font: 0.7rem gotham, sans-serif;
 }
 .msg .message-det .time {
     color: #B6B9C3;
-    font: 0.7rem Arial, Helvetica, sans-serif;
+    font: 0.7rem gotham, sans-serif;
 }
 .msg .message-det .state {
     margin-right: 5px;

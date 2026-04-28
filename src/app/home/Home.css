@@ -182,7 +182,7 @@ body {
     transform: translate(-50%, -50%);
 }
 .make-conversation-text {
-    font: 0.9rem Arial;
+    font: 0.9rem gotham;
     text-align: center;
     margin: 20px;
     color: #cccccc;

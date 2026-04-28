@@ -1,6 +1,6 @@
 .setting-footer {
     color: #888;
-    font: 0.7rem Tahoma, sans-serif;
+    font: 0.7rem gotham, sans-serif;
     text-align: center;
     padding: 9px 0;
 }
@@ -10,7 +10,7 @@
 }
 .setting-unordered-list li {
     padding: 15px 13px;
-    font: 0.9rem Tahoma, sans-serif;
+    font: 1rem gotham, sans-serif;
     cursor: pointer;
 }
 .setting-unordered-list li:hover {
@@ -30,11 +30,11 @@
 }
 .setting-user-name {
     color: #435364;
-    font: 1.3rem Tahoma, sans-serif;
+    font: 900 1.3rem gotham, sans-serif;
     text-align: center;
 }
 .setting-small-title {
-    font: 0.7rem Tahoma, sans-serif;
+    font: 0.7rem gotham, sans-serif;
     color: #888;
     margin-left: 4px;
     letter-spacing: 1px;

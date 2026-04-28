@@ -51,13 +51,13 @@
     flex-direction: row;
 }
 .message-item .right .top .name {
-    font: bold 0.9rem Arial;
+    font: bold 0.9rem gotham;
     color: #495969;
     padding-right: 5px;
     box-sizing: border-box;
 }
 .message-item .right .top .date {
-    font: 0.7rem Arial;
+    font: 0.7rem gotham;
     color: #B6B9C3;
 }
 .message-item .right .bottom .message span.colorly {
@@ -67,7 +67,7 @@
 .message-item .right .bottom .message {
     padding-right: 10px;
     box-sizing: border-box;
-    font: 0.8rem Arial;
+    font: 0.8rem gotham;
     color: #9095A4;
     justify-content: start;
     flex-direction: row;
@@ -88,7 +88,7 @@
     background: #8472FC;
     flex: 0 0 auto;
     border-radius: 100%;
-    font: 0.6rem Tahoma;
+    font: 0.6rem gotham;
 }
 .message-item .right .bottom .new-msg .num {
     color: #fff;

@@ -8,15 +8,15 @@
     margin-bottom: 15px;
 }
 .edit-profile-container label {
-    font: 0.8rem Tahoma, sans-serif;
+    font: 0.8rem gotham, sans-serif;
     color: #485868;
 }
 .edit-profile-container label span {
-    font: 0.6rem Tahoma, sans-serif;
+    font: 0.6rem gotham, sans-serif;
     color: #5d6d7c;
 }
 .edit-profile-container .full-name {
-    font: 1.3rem Tahoma, sans-serif;
+    font: 1.3rem gotham, sans-serif;
     text-align: center;
     color: #485868;
     width: 90%;
@@ -25,14 +25,14 @@
 }
 .edit-profile-container .error-text {
     color: #EC2B59;
-    font: 0.7rem Tahoma, sans-serif;
+    font: 0.7rem gotham, sans-serif;
     margin-top: 7px;
 }
 input.edit-profile-textbox {
     background: #F0F0FB;
     border-radius: 4px;
     width: 100%;
-    font: 0.9rem Tahoma, sans-serif;
+    font: 0.9rem gotham, sans-serif;
     padding: 9px 10px 12px;
 }
 input.edit-profile-textbox:focus {
@@ -43,7 +43,7 @@ input.edit-profile-textbox:focus {
 button.edit-profile-submit {
     background: #8472FC;
     text-align: center;
-    font: 1rem Tahoma, sans-serif;
+    font: 1rem gotham, sans-serif;
     color: #fff;
     width: 100%;
     padding: 10px 15px 13px;
@@ -86,7 +86,7 @@ button.edit-profile-submit:hover {
 .edit-profile-container .bg-forms .bg-gender .gender-item .bg-title {
     text-align: center;
     color: #9a9dad;
-    font: 0.8rem Tahoma, sans-serif;
+    font: 0.8rem gotham, sans-serif;
     margin-top: 3px;
 }
 .edit-profile-container .bg-forms .bg-gender .gender-item .bg-icon.man {
@@ -120,7 +120,7 @@ button.edit-profile-submit:hover {
     gap: 5px;
 }
 .username-situation span {
-    font: 0.8rem Tahoma, sans-serif;
+    font: 0.8rem gotham, sans-serif;
     color: #1fc54c;
     margin-top: 3px;
 }

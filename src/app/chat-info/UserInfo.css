@@ -25,7 +25,7 @@
     padding: 0 10px;
 }
 .user-info .bg-details .name {
-    font: 1.4rem Tahoma;
+    font: 1.4rem gotham;
 }
 .online-status {
     display: flex;
@@ -35,7 +35,7 @@
 }
 .online-status .online-text {
     color: #ccc;
-    font: 0.8rem Tahoma;
+    font: 0.8rem gotham;
 }
 .online-status .online-circle {
     width: 10px;

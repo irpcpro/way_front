@@ -1,12 +1,12 @@
 .list-install-prompt {
-    font: 1.1rem Tahoma;
+    font: 1.1rem gotham;
     text-align: left;
     margin: 0;
     padding: 0;
 }
 .list-install-prompt li {
     margin: 5px 0;
-    font: 1rem Tahoma;
+    font: 1rem gotham;
 }
 .icon-add-to-home {
     display: inline-block;
@@ -31,7 +31,7 @@
     right: -5px;
 }
 .not-now {
-    font: 0.8rem "DanaLight" !important;
+    font: 0.8rem "gotham" !important;
     color: #6c6c6c;
     padding: 0;
 }
@@ -39,5 +39,5 @@
     font-size: 0.8rem;
 }
 .btn-install-app {
-    font-family: "DanaLight" !important;
+    font-family: "gotham" !important;
 }

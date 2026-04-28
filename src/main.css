@@ -1,27 +1,49 @@
 @font-face {
-    font-family: "DanaLight";
-    src: url("./assets/fonts/dana/eot/dana-light.eot");
-    src: url("./assets/fonts/dana/eot/dana-light.eot?#iefix") format("embedded-opentype"),
-    url("./assets/fonts/dana/woff2/dana-light.woff2") format("woff2"),
-    url("./assets/fonts/dana/woff/dana-light.woff") format("woff"),
-    url("./assets/fonts/dana/ttf/dana-light.ttf") format("truetype");
+    font-family: "gotham";
+    src: url("./assets/fonts/gotham/GothamBook.eot");
+    src: url("./assets/fonts/gotham/GothamBook.eot?#iefix") format("embedded-opentype"),
+    url("./assets/fonts/gotham/GothamBook.woff2") format("woff2"),
+    url("./assets/fonts/gotham/GothamBook.woff") format("woff"),
+    url("./assets/fonts/gotham/GothamBook.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
     font-display: swap;
 }
 @font-face {
-    font-family: "DanaNum";
-    src: url("./assets/fonts/dana/eot/dana-fanum-regular.eot");
-    src: url("./assets/fonts/dana/eot/dana-fanum-regular.eot?#iefix") format("embedded-opentype"),
-    url("./assets/fonts/dana/woff2/dana-fanum-regular.woff2") format("woff2"),
-    url("./assets/fonts/dana/woff/dana-fanum-regular.woff") format("woff"),
-    url("./assets/fonts/dana/ttf/dana-fanum-regular.ttf") format("truetype");
-    font-weight: normal;
+    font-family: "gotham";
+    src: url("./assets/fonts/gotham/GothamMedium.eot");
+    src: url("./assets/fonts/gotham/GothamMedium.eot?#iefix") format("embedded-opentype"),
+    url("./assets/fonts/gotham/GothamMedium.woff2") format("woff2"),
+    url("./assets/fonts/gotham/GothamMedium.woff") format("woff"),
+    url("./assets/fonts/gotham/GothamMedium.ttf") format("truetype");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "gotham";
+    src: url("./assets/fonts/gotham/Gotham-Light.eot");
+    src: url("./assets/fonts/gotham/Gotham-Light.eot?#iefix") format("embedded-opentype"),
+    url("./assets/fonts/gotham/Gotham-Light.woff2") format("woff2"),
+    url("./assets/fonts/gotham/Gotham-Light.woff") format("woff"),
+    url("./assets/fonts/gotham/Gotham-Light.ttf") format("truetype");
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "gotham";
+    src: url("./assets/fonts/gotham/Gotham-Bold.eot");
+    src: url("./assets/fonts/gotham/Gotham-Bold.eot?#iefix") format("embedded-opentype"),
+    url("./assets/fonts/gotham/Gotham-Bold.woff2") format("woff2"),
+    url("./assets/fonts/gotham/Gotham-Bold.woff") format("woff"),
+    url("./assets/fonts/gotham/Gotham-Bold.ttf") format("truetype");
+    font-weight: 900;
     font-style: normal;
     font-display: swap;
 }
 body, * {
-    font-family: Arial, sans-serif;
+    font-family: gotham, sans-serif;
 }
 html, body, #root {
     min-height: 100%;
@@ -231,10 +253,10 @@ html, body, #root {
     padding: 5px 20px 8px;
     border-radius: 30px;
     cursor: pointer;
-    font: 0.9rem/1rem "DanaLight";
+    font: 0.9rem/1rem "gotham";
 }
 .font-num {
-    font-family: Arial, sans-serif;
+    font-family: gotham, sans-serif;
 }
 @keyframes rotateIconAnim {
     0% {
@@ -292,7 +314,7 @@ html, body, #root {
     justify-content: center;
     flex-direction: column;
     text-align: center;
-    font: bold 0.5rem/0.5rem Arial;
+    font: bold 0.5rem/0.5rem gotham;
     letter-spacing: -0.6px;
     height: 60px;
     position: absolute;
@@ -371,6 +393,6 @@ html, body, #root {
 }
 .header-row .title {
     color: #fff;
-    font: 0.9rem Tahoma, sans-serif;
+    font: 0.9rem gotham, sans-serif;
     padding: 0 5px;
 }

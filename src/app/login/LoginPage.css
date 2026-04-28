@@ -29,7 +29,7 @@
     width: 100%;
     padding: 16px 10px 18px;
     margin: 0 auto;
-    font: 1.2rem Tahoma !important;
+    font: 1.2rem gotham !important;
     border-radius: 7px;
 }
 .btn-send-login {
@@ -71,11 +71,11 @@
     width: 100%;
     text-align: center;
     color: #fff;
-    font: 0.8rem Arial;
+    font: 0.8rem gotham;
     letter-spacing: 1px;
 }
 .text-alert {
-    font-family: Arial, Helvetica, sans-serif !important;
+    font-family: gotham, Helvetica, sans-serif !important;
     font-weight: normal !important;
 }
 .login-loading {

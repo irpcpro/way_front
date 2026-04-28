@@ -19,7 +19,7 @@
     overflow: hidden;
 }
 .chat-detail .bg-name {
-    font: 1rem Arial, Helvetica, sans-serif;
+    font: 1rem gotham, sans-serif;
     color: #fff;
     cursor: pointer;
     margin-left: 10px;
@@ -63,7 +63,7 @@
     height: 20px;
 }
 .someone-typing .name {
-    font: 0.8rem/0.8rem Arial;
+    font: 0.8rem/0.8rem gotham;
     color: #B6B9C3;
 }
 .load-more-btn {
@@ -73,7 +73,7 @@
     border: none;
     color: #888;
     cursor: pointer;
-    font: 13px Arial;
+    font: 13px gotham;
 }
 
 .load-more-btn:hover {
@@ -129,7 +129,7 @@
     width: 100%;
     text-align: center;
     padding: 6px 8px;
-    font: 0.9rem Arial;
+    font: 0.9rem gotham;
     max-height: 50px;
     overflow-y: auto;
     color: #fff;

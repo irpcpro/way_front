@@ -4,7 +4,7 @@
     background: #8472FC;
     padding: 10px 15px;
     color: #fff;
-    font: 0.9rem/1.5 Tahoma, Verdana, Arial;
+    font: 0.9rem/1.5 gotham;
     cursor: pointer;
 }
 .btn-make-conversation.loading {

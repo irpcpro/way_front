@@ -167,15 +167,15 @@ function MessagePage(callback, deps) {
             callbackSuccess?.();
         }).catch(() => {
             // در صورت خطا وضعیت رو update کن
-            setMessageDetails(prev => ({
-                ...prev,
-                chats: prev.chats.map(item =>
-                    item.message.client_id === clientId
-                        ? { ...item, status: config.enum.message_status.failed }
-                        : item
-                )
-            }));
-            callbackFailed?.()
+            // setMessageDetails(prev => ({
+            //     ...prev,
+            //     chats: prev.chats.map(item =>
+            //         item.message.client_id === clientId
+            //             ? { ...item, status: config.enum.message_status.failed }
+            //             : item
+            //     )
+            // }));
+            // callbackFailed?.()
         });
     };
 
